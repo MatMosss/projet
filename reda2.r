@@ -1,0 +1,1 @@
+data <- read.csv("stat_Moha.csv", sep=";")
