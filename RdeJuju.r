@@ -1,1 +1,1 @@
-print("papa")
+import "stat_acc_V3.csv"
