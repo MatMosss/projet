@@ -24,11 +24,11 @@ fonction_visu <- function(colonne){
     list_nb <- c(list_nb, compteur)
     list_type <- c(list_type, elt)
     }
-    
-return(list(list_nb = list_nb, list_type = list_type))
+
+    return(list(list_nb = list_nb, list_type = list_type))
 }
 
-par(mfrow = c(1, 2)) #créer un tableau pour mettre les pie à coté
+par(mfrow = c(1, 3)) #créer un tableau pour mettre les pie à coté
 valeur <- fonction_visu(BDD$descr_athmo)
 
 valeur1 <- valeur$list_nb
@@ -44,12 +44,17 @@ de conditions atmosphériques "
 surface <- fonction_visu(BDD$descr_etat_surf)
 surf1 <- surface$list_nb
 surf2 <- surface$list_type
-print(surf1)
-print(surf2)
+
 pie(surf1, labels = surf2, main = "nb d'accident en fct de la surface")
 legend("topleft", legend = "Ici on peut voir que sur sol mouillé, 
 12250/73643*100 = 16,6% or il pleut en moyenne 15% du temps 
 et la pluie peut mettre du temps à sécher, 
 on ne peut pas conclure que les accidents sont lié à la surface"
 , bty = "n")
+ville <- fonction_visu(BDD$ville)
+ville1 <- ville$list_nb
+ville2 <- ville$list_type
+
+barplot(ville1, names.arg = ville2, main = "nb d'accident en fct de la ville",
+ xlab = "ville", ylab = "nb accident")
 print("Fin du code")
