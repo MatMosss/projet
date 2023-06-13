@@ -14,5 +14,3 @@ data$place <- as.numeric(data$place)
 data$date <- as.Date(data$date)
 
 gf=data$place
-
-
