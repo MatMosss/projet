@@ -1,5 +1,10 @@
 library(sqldf)
 library(dplyr)
+library(maps)
+library(ggplot2)
+library(rmapshaper)
+library(sf)
+
 vecteur1 <- c(1,1,1,3,3)
 vecteur2 <- c(1,2,3) ; vecteur3 <- c("a","b","c")
 vecteur2 <- data.frame(x = vecteur2, y = vecteur3) 
@@ -26,23 +31,23 @@ population$PTOT <- as.numeric(population$PTOT)
 population$pr_100000 = 100000*population$count/population$PTOT
 # print(nbr_incidents)
 
-library(tmap)
-tmap_mode(mode = "view")
-library(rnaturalearth)
+
+
 library(sf)
-library(dplyr)
+library(ggplot2)
+library(stringr)
+regions <- st_read("data/regions-20180101-shp/")
+regions1 <- ms_simplify(regions) #pour réduire le temp d'affichage de la carte
+format(object.size(regions1),units="Mb")
+reg_arrang <- data.frame(tolower(regions1$nom))
+colnames(reg_arrang)[1] <- c("region_name")
+reg_arrang_join = sqldf("SELECT reg_arrang.region_name, nbr_incidents.somme_count FROM reg_arrang LEFT JOIN nbr_incidents ON reg_arrang.region_name = nbr_incidents.region_name")
+reg_arrang_join[14, "somme_count"] <- 0
+reg_arrang_join$somme_count <- as.integer(reg_arrang_join$somme_count)
+# reg_arrang_join$region_name <- str_to_title(reg_arrang_join$region_name)
 
-france <- ne_states(country = "France", returnclass = "sf")
-
-# Configuration des options de tmap pour améliorer la vitesse d'affichage
-
-map <- tm_shape(france) +
-  tm_polygons(col = ifelse(france$name == "Normandie", "red", "provnum_ne"))
-
-tmap_leaflet(map)
-print(map)
-
-# valeurs_acceptees <- unique(france$region)
-
-# # Afficher les valeurs
-# print(valeurs_acceptees)
+print(ggplot(regions1) +
+  geom_sf(aes(fill = as.matrix(reg_arrang_join$somme_count))) +
+  scale_fill_continuous(low="white",high="blue")+
+  coord_sf(xlim = c(-5.5, 10), ylim = c(41, 51)) +
+  theme_void())
