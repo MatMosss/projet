@@ -1,3 +1,5 @@
+require(FactoMineR)
+
 data <- read.csv2('stat_Ninho.csv')
 cities <- read.csv2('cities.csv',sep = ",")
 
@@ -23,48 +25,48 @@ fonction_visu <- function(colonne){
 # print(unique(data$descr_agglo))
 
 
-data$descr_agglo[data$descr_agglo == "Hors agglomération"] <- 0
-data$descr_agglo[data$descr_agglo == "En agglomération"] <- 1
+# data$descr_agglo[data$descr_agglo == "Hors agglomération"] <- 0
+# data$descr_agglo[data$descr_agglo == "En agglomération"] <- 1
 
 # print(unique(data$descr_agglo))
 
 # print(unique(data$descr_cat_veh))
 
-listj = as.list(unique(data$descr_cat_veh))
-j = 0;
+# listj = as.list(unique(data$descr_cat_veh))
+# j = 0;
 
-for (elt in listj){
-    data$descr_cat_veh[data$descr_cat_veh==elt] <- j;
-    j = j + 1 
+# for (elt in listj){
+#     data$descr_cat_veh[data$descr_cat_veh==elt] <- j;
+#     j = j + 1 
 
-}
+# }
 
 # print(unique(data$descr_cat_veh))
 
 # print(unique(data$descr_athmo))
 
-listl = as.list(unique(data$descr_athmo))
-l= 0 
+# listl = as.list(unique(data$descr_athmo))
+# l= 0 
 
-for (elt in listl){
-    data$descr_athmo[data$descr_athmo==elt] <- l;
-    l = l + 1 
+# for (elt in listl){
+#     data$descr_athmo[data$descr_athmo==elt] <- l;
+#     l = l + 1 
 
-}
+# }
 
 # print(unique(data$descr_athmo))
 
 
 # print(unique(data$descr_lum))
 
-listn = as.list(unique(data$descr_lum))
-n =0
+# listn = as.list(unique(data$descr_lum))
+# n =0
 
-for (elt in listn){
-    data$descr_lum[data$descr_lum==elt] <- n;
-    n = n + 1 
+# for (elt in listn){
+#     data$descr_lum[data$descr_lum==elt] <- n;
+#     n = n + 1 
 
-}
+# }
 
 # print(unique(data$descr_lum))
 
@@ -79,26 +81,28 @@ for (elt in listn){
 # print(unique(data$descr_grav))
 
 
-data$descr_grav[data$descr_grav == "Indemne"] <- 0
-data$descr_grav[data$descr_grav == "Blessé léger"] <- 1
-data$descr_grav[data$descr_grav == "Blessé hospitalisé"] <- 2
-data$descr_grav[data$descr_grav == "Tué"] <- 3
+# data$descr_grav[data$descr_grav == "Indemne"] <- 0
+# data$descr_grav[data$descr_grav == "Blessé léger"] <- 1
+# data$descr_grav[data$descr_grav == "Blessé hospitalisé"] <- 2
+# data$descr_grav[data$descr_grav == "Tué"] <- 3
 
 # print(unique(data$descr_grav))
 
 
 # print(unique(data$descr_motif_traj))
 
-listo = as.list(unique(data$descr_motif_traj))
-o =0
+# listo = as.list(unique(data$descr_motif_traj))
+# o =0
 
-for (elt in listo){
-    data$descr_motif_traj[data$descr_motif_traj==elt] <- o;
-    o = o + 1 
+# for (elt in listo){
+#     data$descr_motif_traj[data$descr_motif_traj==elt] <- o;
+#     o = o + 1 
 
-}
+# }
 
 # print(unique(data$descr_motif_traj))
+
+
 
 # 974 976 973 972 971
 #table()
@@ -159,6 +163,7 @@ names(cities)[1]<-"id_code_insee"
 
 # print(scoreRectifie)
 
+
 # for(i in 1:length(data$id_code_insee)){
 
 #     print(round(as.numeric(data$id_code_insee[i])/10000,0))
@@ -183,46 +188,101 @@ write.csv(data, "stat_nino3.csv", row.names = FALSE)
 
 BDD2 <- read.csv2(file = "stat_nino3.csv", sep = ",")
 
-# valeur1 <- fonction_visu(BDD2$mois)
-# nbaccident <- as.numeric(valeur1$list_nb)
-# numois <- as.numeric(valeur1$list_type)
-# # print(nbaccident)
-# # print(numois)
+valeur1 <- fonction_visu(BDD2$mois)
+nbaccident <- as.numeric(valeur1$list_nb)
+numois <- as.numeric(valeur1$list_type)
+
+nbaccidentcumul <-rep(0,12)
+nbaccidentcumul[1] = nbaccident[1]
+
+for(i in 2:length(nbaccidentcumul)){
+
+    nbaccidentcumul[i] = nbaccident[i]+nbaccidentcumul[i-1]
+
+}
+# print(nbaccident)
+# print(nbaccidentcumul)
+# print(numois)
 # model <- lm(nbaccident ~ numois)
-# # plot(numois,nbaccident)
-# # abline(lm(nbaccident ~ numois))
+# modelcumul<-lm(nbaccidentcumul~numois)
+# plot(numois,nbaccidentcumul)
+
+# plot(numois,nbaccident, col = "blue")
+# abline(lm(nbaccident ~ numois))
 # print(summary(model))
 # print(anova(model))
 
-# valeur2 <- fonction_visu(BDD2$semaines)
-# nbaccident2 <- as.numeric(valeur2$list_nb)
-# nusemaines <- as.numeric(valeur2$list_type)
-# # print(nbaccident2)
-# # print(nusemaines)
-# model2 <- lm(nbaccident2 ~ nusemaines)
-# # plot(nusemaines,nbaccident2)
-# # abline(lm(nbaccident2 ~ nusemaines))
+# print(summary(modelcumul))
+# print(anova(modelcumul))
+
+# plot(numois,nbaccidentcumul, col = "red")
+# abline(lm(nbaccidentcumul ~ numois))
+
+valeur2 <- fonction_visu(BDD2$semaines)
+nbaccident2 <- as.numeric(valeur2$list_nb)
+nusemaines <- as.numeric(valeur2$list_type)
+
+nbaccidentcumul2 <-rep(0,53)
+nbaccidentcumul2[1] = nbaccident2[1]
+for(i in 2:length(nbaccidentcumul2)){
+
+    nbaccidentcumul2[i] = nbaccident2[i]+nbaccidentcumul2[i-1]
+
+}
+# print(nbaccidentcumul2)
+# print(nbaccident2)
+# print(nusemaines)
+model2 <- lm(nbaccident2 ~ nusemaines)
+modelcumul2<-lm(nbaccidentcumul2~nusemaines)
+
+# plot(nusemaines,nbaccidentcumul2)
+# plot(nusemaines,nbaccident2)
+# abline(lm(nbaccident2 ~ nusemaines))
 # print(summary(model2))
 # print(anova(model2))
 
+print(summary(modelcumul2))
+print(anova(modelcumul2))
 
-proportionVarMois = 501389/(501389+5465454)
-proportionVarS = 103891/(103891+3317633)
+# plot(nusemaines,nbaccidentcumul2, col = "red")
+# abline(lm(nbaccidentcumul2 ~ nusemaines))
 
-print(proportionVarMois)
-print(proportionVarS)
 
-ICmoisB0 = c(5752.03 - 455.00*1.96,5752.03 + 455.00*1.96)
-ICsB0 = c(1314.239 - 69.088*1.96,1314.239 + 69.088*1.96)
+# proportionVarMois = 501389/(501389+5465454)
+# proportionVarS = 103891/(103891+3317633)
 
-ICmoisB1 = c(59.21-61.82*1.96,59.21+61.82*1.96)
-ICsB1 = c(2.894-2.290*1.96,2.894+2.290*1.96)
+proportionVarMoisCumul = 5839194782/(5839194782+5450229)
+proportionVarSCumul = 2.5933e+10/(2.5933e+10+3.0704e+08)
 
-print(ICmoisB0)
-print(ICmoisB1)
+print(proportionVarMoisCumul)
+print(proportionVarSCumul)
 
-print(ICsB0)
-print(ICsB1)
+# print(proportionVarMois)
+# print(proportionVarS)
+
+# ICmoisB0 = c(5752.03 - 455.00*1.96,5752.03 + 455.00*1.96)
+# ICsB0 = c(1314.239 - 69.088*1.96,1314.239 + 69.088*1.96)
+
+# ICmoisB1 = c(59.21-61.82*1.96,59.21+61.82*1.96)
+# ICsB1 = c(2.894-2.290*1.96,2.894+2.290*1.96)
+
+ICmoisCumulB0 = c(-2351.39 - 1.96*454.37, -2351.39 + 1.96*454.37)
+ICmoisCumulB1 = c(6390.11 - 1.96*61.74,6390.11 + 1.96*61.74)
+
+ICsCumulB0 = c(-670.49 - 1.96*664.64,-670.49 + 1.96*664.64)
+ICsCumulB1 = c(1446.05 - 1.96*22.03, 1446.05 + 1.96*22.03)
+
+print(ICmoisCumulB0)
+print(ICmoisCumulB1)
+
+print(ICsCumulB0)
+print(ICsCumulB1)
+
+# print(ICmoisB0)
+# print(ICmoisB1)
+
+# print(ICsB0)
+# print(ICsB1)
 
 
 # valeur3 <- fonction_visu(BDD2$descr_athmo)
@@ -244,25 +304,22 @@ print(ICsB1)
 # print(summary(model4))
 # print(anova(model4))
 
-valeurs = rep(0,length(colnames(data)))
-nbaccidents = rep(0,length(colnames(data)))
-nus = rep(0,length(colnames(data)))
-models= rep(0,length(colnames(data)))
+# valeurs = rep(0,length(colnames(data)))
+# nbaccidents = rep(0,length(colnames(data)))
+# nus = rep(0,length(colnames(data)))
+# models= rep(0,length(colnames(data)))
 
-print(colnames(BDD2)[1])
-print(BDD2$colnames(BDD2)[1])
+# print(colnames(BDD2)[1])
+# print(BDD2$colnames(BDD2)[1])
 
-for(i in 1:length(colnames(BDD2))){
+# for(i in 1:length(colnames(BDD2))){
 
-    valeurs[i] <- fonction_visu(BDD2$colnames(BDD2)[i])
-    nbaccident[i] <- as.numeric(valeur[i]$list_nb)
-    nus[i] <- as.numeric(valeur[i]$list_type)
-    model[i] = lm(nbaccident[i]~nus[i])
-    # plot(nulum,nbaccident4)
-    # print(summary(model4))
-    # print(anova(model4))
+#     valeurs[i] <- fonction_visu(BDD2$colnames(BDD2)[i])
+#     nbaccident[i] <- as.numeric(valeur[i]$list_nb)
+#     nus[i] <- as.numeric(valeur[i]$list_type)
+#     model[i] = lm(nbaccident[i]~nus[i])
 
-}
+# }
 
 # moisRSS = 0
 # for(i in 1:length(valeur1$list_nb)){
@@ -273,6 +330,29 @@ for(i in 1:length(colnames(BDD2))){
 
 # print(moisRSS)
 
+moisCumulSCE = 0
+for(i in 1:length(nbaccidentcumul)){
+
+        moisCumulSCE = moisCumulSCE + (mean(nbaccidentcumul[i]) - (6390.11 + i*61.74))**2
+
+}
+
+moisCumulSCT = 0
+for(i in 1:length(nbaccidentcumul)){
+
+        moisCumulSCT = moisCumulSCT + (mean(nbaccidentcumul[i]) - nbaccidentcumul[i])**2
+
+}
+
+moisCumulR2 = moisCumulSCE/moisCumulSCT
+print(moisCumulR2)
+
+sCumulSCE = 0
+for(i in 1:length(nbaccidentcumul2)){
+
+        moisCumulSCE = moisCumulSCE + (mean(nbaccidentcumul[i]) - 1446.05 + i*22.03)**2
+
+}
 # moisTSS = 0
 # for(i in 1:length(valeur1$list_nb)){
 
@@ -328,3 +408,7 @@ for(i in 1:length(colnames(BDD2))){
 
 # sR2 = sSCE/sTSS
 # print(sR2)
+
+
+
+# PCA = PCA(data)
