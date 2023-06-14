@@ -52,26 +52,53 @@ infos <- subset(infos, !duplicated(insee_code))
 #   theme_void()
 # )
 
-# regions <- read_sf("data/regions-20180101-shp/")
-# library(rmapshaper)
-# regions1 <- ms_simplify(regions)
-# format(object.size(regions1),units="Mb")
-# print(ggplot(regions1)+geom_sf()+
-#   coord_sf(xlim = c(-5.5,10),ylim=c(41,51))+theme_void())
+# regions <- st_read("data/regions-20180101-shp/")
+# regions1 <- ms_simplify(regions) #pour réduire le temp d'affichage de la carte
+# index_hdf <- which(regions1$nom == "Bourgogne-Franche-Comté")
+# print(ggplot() +
+#   geom_sf(data = regions1) +
+#   geom_sf(data = regions1[index_hdf, ], fill = "red") +
+#   coord_sf(xlim = c(-5.5, 10), ylim = c(41, 51)) +
+#   theme_void())
 
 
+# data <- cbind(data, departement = NA, region = NA)
+# compteur <- 1
+# for (insee in data$id_code_insee) {
+#   data$departement[compteur] <-  subset(infos, insee_code == insee,department_name )
+#   data$region[compteur] <-  subset(infos, insee_code == insee,region_name )
+#   print(compteur)
+#   compteur <- compteur + 1
+# }
 
-regions <- st_read("data/regions-20180101-shp/")
+# write.csv(data, "stat_MossMossV1.csv", row.names = FALSE)
 
-# Simplifier les données
-regions1 <- ms_simplify(regions)
+# colnames(df)[colnames(df) == "ancien_nom"] <- "id_code_insee"
 
-# Identifier l'index de la région des Hauts-de-France
-index_hdf <- which(regions1$nom == "Bourgogne-Franche-Comté")
+unique_data <- subset(infos, !duplicated(infos$region_name))
+region_names <- head(unique_data$region_name, 13)
+gravite <-unique(data$descr_grav)
+df_regions <- data.frame(matrix(nrow = 4, ncol = 13))
+colnames(df_regions) <- region_names
+# print(table(data$descr_grav)[1]) 
+# print(table(data$descr_grav)[1]) 
 
-# Tracer la carte des régions simplifiées avec les Hauts-de-France en rouge
-print(ggplot() +
-  geom_sf(data = regions1) +
-  geom_sf(data = regions1[index_hdf, ], fill = "red") +
-  coord_sf(xlim = c(-5.5, 10), ylim = c(41, 51)) +
-  theme_void())
+#infos$region_name[infos$insee_code == data$id_code_insee]
+
+# for (region in colnames(df_regions)) {
+# }
+# data$id_code_insee <- as.numeric(data$id_code_insee)
+# data <- drop_na(data$id_code_insee)
+for (elt in unique(data$id_code_insee)){
+    
+}
+
+
+# df_counts <- data.frame(insee = unique(data$id_code_insee), count_descr_grav_1 = 0)
+
+# for (i in 1:nrow(df_counts)) {
+#   insee_value <- df_counts$insee[i]
+#   count_descr_grav_1 <- sum(data$descr_grav[data$insee == insee_value] == 1)
+#   df_counts$count_descr_grav_1[i] <- count_descr_grav_1
+# }
+# print(df_counts)
