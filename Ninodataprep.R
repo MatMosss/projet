@@ -2,6 +2,7 @@ require(FactoMineR)
 library(sqldf)
 library(dplyr)
 library(factoextra)
+library(ggplot2)
 vecteur1 <- c(1,1,1,3,3)
 vecteur2 <- c(1,2,3) ; vecteur3 <- c("a","b","c")
 vecteur2 <- data.frame(x = vecteur2, y = vecteur3) 
@@ -465,9 +466,31 @@ ICsCumulB1 = c(1446.05 - 1.96*22.03, 1446.05 + 1.96*22.03)
 
 PCA = PCA(population)
 print(PCA$eig)
+print(class(PCA$eig))
+# print(barplot(PCA$eig, main = "Barplot des Eigenvalues de PCA", xlab = "Composante", ylab = "Eigenvalue"))
+listEIG = c()
+
+data <- data.frame(Composante = 1:length(PCA$eig), Eigenvalue = PCA$eig)
+print(ggplot(data, aes(x = 1:length(PCA$eig), y = PCA$eig)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(title = "Barplot des Eigenvalues de PCA", x = "Composante", y = "Eigenvalue"))
+
+for (i in 6:10){
+
+    listEIG<-append(listEIG,PCA$eig[i])
+}
+print(listEIG)
 # print(PCA$ind)
 # print(PCA$var)
-fviz_screeplot(X = PCA,choice = "eigenvalue",geom = "bar",)
-layout(matrix(1:2,nrow=1))
-plot(PCA, choix="ind", cex=0.7)
-plot(PCA, choix="var")
+listsuite = c(1,2,3,4,5)
+dfeig =data.frame(listEIG, listsuite)
+print(dfeig)
+# figure <- ggplot(dfeig, aes(x = listEIG, y = listsuite, fill=listsuite)) + geom_bar()
+
+# print(figure)
+    
+# fviz_screeplot(X = dfeig,choice = "eigenvalue",geom = "bar",)
+# layout(matrix(1:2,nrow=1))
+# plot(PCA, choix="ind", cex=0.7)
+# plot(PCA, choix="var")
+print("fin")
