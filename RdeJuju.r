@@ -20,7 +20,7 @@ fonction_visu <- function(colonne, cumule){
     if(cumule == 0){
     compteur <- 0}
     if(cumule == 1){
-        valeur <- 0
+        valeur <- valeur + valeur
     }
     for (elt in unique(colonne)){
         compteur <- 0
