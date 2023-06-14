@@ -1,6 +1,7 @@
 require(FactoMineR)
 library(sqldf)
 library(dplyr)
+library(factoextra)
 vecteur1 <- c(1,1,1,3,3)
 vecteur2 <- c(1,2,3) ; vecteur3 <- c("a","b","c")
 vecteur2 <- data.frame(x = vecteur2, y = vecteur3) 
@@ -23,6 +24,24 @@ population <- cbind(population, pr_100000 = NA)
 population$count <- as.numeric(population$count)
 population$PTOT <- as.numeric(population$PTOT)
 population$pr_100000 = 100000*population$count/population$PTOT
+
+listv = as.list(unique(population$region_name))
+v = 0;
+
+for (elt in listv){
+    population$region_name[population$region_name==elt] <- v;
+    v = v + 1 
+
+}
+
+population$descr_grav[population$descr_grav == "Indemne"] <- 0
+population$descr_grav[population$descr_grav == "Blessé léger"] <- 1
+population$descr_grav[population$descr_grav == "Blessé hospitalisé"] <- 2
+population$descr_grav[population$descr_grav == "Tué"] <- 3
+
+population$descr_grav = as.numeric(population$descr_grav)
+population$region_name = as.numeric(population$region_name)
+
 
 data <- read.csv2('stat_Ninho.csv')
 cities <- read.csv2('cities.csv',sep = ",")
@@ -236,6 +255,7 @@ for(i in 2:length(nbaccidentcumul)){
 # print(summary(model))
 # print(anova(model))
 
+
 # print(summary(modelcumul))
 # print(anova(modelcumul))
 
@@ -259,14 +279,17 @@ for(i in 2:length(nbaccidentcumul2)){
 model2 <- lm(nbaccident2 ~ nusemaines)
 modelcumul2<-lm(nbaccidentcumul2~nusemaines)
 
+# print(mean(nbaccident2))
+# print((12*639)/12)
+
 # plot(nusemaines,nbaccidentcumul2)
 # plot(nusemaines,nbaccident2)
 # abline(lm(nbaccident2 ~ nusemaines))
 # print(summary(model2))
 # print(anova(model2))
 
-print(summary(modelcumul2))
-print(anova(modelcumul2))
+# print(summary(modelcumul2))
+# print(anova(modelcumul2))
 
 # plot(nusemaines,nbaccidentcumul2, col = "red")
 # abline(lm(nbaccidentcumul2 ~ nusemaines))
@@ -278,8 +301,8 @@ print(anova(modelcumul2))
 proportionVarMoisCumul = 5839194782/(5839194782+5450229)
 proportionVarSCumul = 2.5933e+10/(2.5933e+10+3.0704e+08)
 
-print(proportionVarMoisCumul)
-print(proportionVarSCumul)
+# print(proportionVarMoisCumul)
+# print(proportionVarSCumul)
 
 # print(proportionVarMois)
 # print(proportionVarS)
@@ -296,11 +319,11 @@ ICmoisCumulB1 = c(6390.11 - 1.96*61.74,6390.11 + 1.96*61.74)
 ICsCumulB0 = c(-670.49 - 1.96*664.64,-670.49 + 1.96*664.64)
 ICsCumulB1 = c(1446.05 - 1.96*22.03, 1446.05 + 1.96*22.03)
 
-print(ICmoisCumulB0)
-print(ICmoisCumulB1)
+# print(ICmoisCumulB0)
+# print(ICmoisCumulB1)
 
-print(ICsCumulB0)
-print(ICsCumulB1)
+# print(ICsCumulB0)
+# print(ICsCumulB1)
 
 # print(ICmoisB0)
 # print(ICmoisB1)
@@ -345,7 +368,7 @@ print(ICsCumulB1)
 
 # }
 
-print(summary(modelcumul2)[8][1])
+# print(summary(modelcumul2)[8][1])
 
 # moisCumulSCE = 0
 # for(i in 1:length(nbaccidentcumul)){
@@ -440,8 +463,11 @@ print(summary(modelcumul2)[8][1])
 # sR2 = sSCE/sTSS
 # print(sR2)
 
-
-USA=as.data.frame(state.x77)
-test = PCA(USA)
 PCA = PCA(population)
-print(PCA)
+print(PCA$eig)
+# print(PCA$ind)
+# print(PCA$var)
+fviz_screeplot(X = PCA,choice = "eigenvalue",geom = "bar",)
+layout(matrix(1:2,nrow=1))
+plot(PCA, choix="ind", cex=0.7)
+plot(PCA, choix="var")
