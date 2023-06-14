@@ -39,6 +39,7 @@ france <- ne_states(country = "France", returnclass = "sf")
 map <- tm_shape(france) +
   tm_polygons(col = ifelse(france$name == "Normandie", "red", "provnum_ne"))
 
+tmap_leaflet(map)
 print(map)
 
 # valeurs_acceptees <- unique(france$region)
