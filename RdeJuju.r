@@ -1,3 +1,4 @@
+library(ggplot2)
 BDD <- read.csv2(file = "stat_juju.csv")
 library(ggplot2)
 BDD[BDD == "NULL"] <- " NA"
@@ -12,11 +13,12 @@ BDD$descr_grav[BDD$descr_grav == "Indemne"] <- 0
 BDD$descr_grav[BDD$descr_grav == "Blessé léger"] <- 1
 BDD$descr_grav[BDD$descr_grav == "Blessé hospitalisé"] <- 2
 BDD$descr_grav[BDD$descr_grav == "Tué"] <- 3
-fonction_visu <- function(colonne){
+fonction_visu <- function(colonne, cumule){
     list_nb <- vector("numeric", 0)
 
     list_type <- vector("character", 0)
-    compteur <- 0
+    if(cumule == 0){
+    compteur <- 0}
     for (elt in unique(colonne)){
         compteur <- 0
         for (element in colonne){
@@ -31,7 +33,7 @@ fonction_visu <- function(colonne){
     return(list(list_nb = list_nb, list_type = list_type))
 }
 affiche_pie_athmo <- function(){
-    valeur <- fonction_visu(BDD$descr_athmo)
+    valeur <- fonction_visu(BDD$descr_athmo, 0)
 
     valeur1 <- valeur$list_nb
     valeur2 <- valeur$list_type
@@ -50,7 +52,7 @@ de conditions atmosphériques ")
     print(figure)
 }
 affiche_pie_surface <- function(){
-    surface <- fonction_visu(BDD$descr_etat_surf)
+    surface <- fonction_visu(BDD$descr_etat_surf, 0)
     surf1 <- surface$list_nb
     surf2 <- surface$list_type
     dfathmo <- data.frame(surf1 = surface$list_nb, surf2 = surface$list_type)
@@ -68,7 +70,7 @@ affiche_pie_surface <- function(){
     print(figure1)
     }
 affiche_barre_ville <- function(){
-    ville <- fonction_visu(BDD$ville)
+    ville <- fonction_visu(BDD$ville, 0)
     ville1 <- ville$list_nb[ville$list_nb > 500]
     ville2 <- ville$list_type[ville$list_nb > 500]
     dfville <- data.frame(ville1, ville2)
@@ -80,10 +82,11 @@ affiche_barre_ville <- function(){
     print(figure)
     }
 
-affiche_pie_heure() <- function(){
+affiche_pie_heure <- function(){
     date <- BDD$date
     listV <- c(0, 0, 0, 0, 0, 0)
     listV <- as.numeric(listV)
+    print(listV)
     compteur =0
     for(elt in date){
         compteur = compteur +1
@@ -96,6 +99,7 @@ affiche_pie_heure() <- function(){
         }
     }
     }
+    
     tranche_heure = c("0-4h", "4-8h", "8-12h", "12-16h", "16-20h", "20-24h")
     dfheure <- data.frame(listV, tranche_heure)
     figure2 <- ggplot(data = dfheure, aes(x = "", y = listV, fill = tranche_heure)) +
@@ -107,7 +111,7 @@ affiche_pie_heure() <- function(){
     print(figure2)
 }
 affiche_pie_gravite <- function(){
-    gravite <- fonction_visu(BDD$descr_grav)
+    gravite <- fonction_visu(BDD$descr_grav, 0)
     grav1 <- gravite$list_nb
     grav2 <- gravite$list_type
     dfgrav <- data.frame(grav1, grav2)
@@ -119,6 +123,7 @@ affiche_pie_gravite <- function(){
         theme_void()
     print(figure1)
 }
+
 ecriture_csv <- function(){
     listeVide = c()
     for(elt in BDD$date){
@@ -132,43 +137,49 @@ ecriture_csv <- function(){
     write.csv(BDD, "stat_juju3.csv", row.names = FALSE)
 }
 BDD2 <- read.csv2(file = "stat_juju3.csv", sep = ",")
+print(nombre)
 
 affiche_serie_mois <- function(){
-    valeur1 <- fonction_visu(BDD2$mois)
+    valeur1 <- fonction_visu(BDD2$mois, 1)
     nbaccident <- valeur1$list_nb
     numois <- valeur1$list_type
 
     dictionnaire_mois <- c("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Sept", "Octo", "Nov", "Déc")
+    print(nbaccident)
+    print(numois)
     dfmois = data.frame(nbaccident, numois)
-    figure2 <- ggplot(data = dfmois, aes(x = "", y = nbaccident, fill = numois)) +
-        geom_bar(stat = "identity", width = 1) +
-        coord_polar(theta = "y") +
+    figure2 <- ggplot(data = dfmois, aes(x = nbaccident, y = numois)) +
         labs(title = "Répartition des accidents en fonction 
-        des conditions atmosphériques") +
+             des conditions atmosphériques") +
         theme_void()
     print(figure2)
+ }
+ #        geom_point() + geom_line() +
+affiche_serie_semaine <- function(){
+    valeur2 <- fonction_visu(BDD2$semaine, 1)
+    nbaccidentparsemaine <- valeur2$list_nb
+    numsemaine <- valeur2$list_type
+    numsemaine <- as.numeric(numsemaine)
+    nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
+    numsemaine <- sort(numsemaine)
+    print(nbaccidentparsemaine)
+    print(numsemaine)
+    dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
+    figure4 <- ggplot(data = dfsemaine, aes(x = nbaccidentparsemaine, y = numsemaine)) +
+        labs(title = "Répartition des accidents en fonction 
+             des conditions atmosphériques") +
+        theme_void()
+    print("On remarque que la distribution générale des 
+    accidents dans le temps ne suit pas un modèle linéaire.
+    Cependant, et justement car la variabilité des accidents 
+    est grande entre deux intervalles de temps 
+    (cela se remarque d'autant plus dans le cas
+    des semaines, où les fluctuations
+    de signe de la dérivée sont très nombreuses) 
+    on peut estimer qu'un modèle linéaire
+    conviendrait mieux à la
+    distribution mensuelle des accidents.  ")
+    print(figure4)
 }
-# valeur2 <- fonction_visu(BDD2$semaine)
-# nbaccidentparsemaine <- valeur2$list_nb
-# numsemaine <- valeur2$list_type
-# numsemaine <- as.numeric(numsemaine)
-# nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
-# numsemaine <- sort(numsemaine)
-# print(nbaccidentparsemaine)
-# print(numsemaine)
-# plot(numsemaine, nbaccidentparsemaine, type = "b", col = "red",
-#      xlab = "numsemaine", ylab = "nbaccident",
-#      main = "série chronologique de nb d'accident par semaine")
-# legend("bottom", legend = "On remarque que la distribution générale des 
-# accidents dans le temps ne suit pas un modèle linéaire.
-# Cependant, et justement car la variabilité des accidents 
-# est grande entre deux intervalles de temps 
-# (cela se remarque d'autant plus dans le cas
-#  des semaines, où les fluctuations
-# de signe de la dérivée sont très nombreuses) 
-# on peut estimer qu'un modèle linéaire
-#  conviendrait mieux à la
-#  distribution mensuelle des accidents.  "
-# , bty = "n")
-# print(table(BDD$semaine))
+affiche_pie_heure()
 print("fin de code")
