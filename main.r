@@ -1,3 +1,4 @@
+source("RdeJuju.r")
 library(ggplot2)
 BDD <- read.csv2(file = "stat_juju.csv")
 library(ggplot2)
