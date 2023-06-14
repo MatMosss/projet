@@ -7,7 +7,6 @@ names(BDD)
 summary(BDD)
 head(BDD)
 nombre <- dim(BDD)[1]
-print(nombre)
 counts <- unique(BDD$descr_athmo)
 BDD$descr_grav[BDD$descr_grav == "Indemne"] <- 0
 BDD$descr_grav[BDD$descr_grav == "Blessé léger"] <- 1
@@ -17,13 +16,14 @@ fonction_visu <- function(colonne, cumule){
     list_nb <- vector("numeric", 0)
     valeur <- 0
     list_type <- vector("character", 0)
-    if(cumule == 0){
-    compteur <- 0}
-    if(cumule == 1){
-        valeur <- valeur + valeur
-    }
+    compteur <- 0
     for (elt in unique(colonne)){
-        compteur <- 0
+       
+        if(cumule == 0){
+            compteur <- 0}
+        if(cumule == 1){
+            valeur <- valeur + valeur
+    }
         for (element in colonne){
             if (element == elt) {
                 compteur <- compteur + 1
@@ -84,6 +84,7 @@ affiche_barre_ville <- function(){
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_fill_gradient(low = "blue", high = "red")
+    #scale_fill_viridis_d()
     print(figure)
     }
 
@@ -142,7 +143,6 @@ ecriture_csv <- function(){
     write.csv(BDD, "stat_juju3.csv", row.names = FALSE)
 }
 BDD2 <- read.csv2(file = "stat_juju3.csv", sep = ",")
-print(nombre)
 
 affiche_serie_mois <- function(){
     valeur1 <- fonction_visu(BDD2$mois, 1)
@@ -154,6 +154,7 @@ affiche_serie_mois <- function(){
     print(numois)
     numois <- as.numeric(numois)
     dfmois = data.frame(nbaccident, numois)
+    print(dfmois)
     figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident)) +
     geom_line() +
         labs(title = "Répartition des accidents en fonction 
@@ -163,14 +164,13 @@ affiche_serie_mois <- function(){
  }
  # geom_point() + geom_line() +
 affiche_serie_semaine <- function(){
-    valeur2 <- fonction_visu(BDD2$semaine, 1)
+    valeur2 <- fonction_visu(BDD2$semaine, 1)  
     nbaccidentparsemaine <- valeur2$list_nb
     numsemaine <- valeur2$list_type
     numsemaine <- as.numeric(numsemaine)
-    nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
     numsemaine <- sort(numsemaine)
-    print(nbaccidentparsemaine)
-    print(numsemaine)
+    nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
+
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
     figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
     geom_line() +
