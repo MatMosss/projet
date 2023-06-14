@@ -83,7 +83,7 @@ affiche_barre_ville <- function(){
          x = "Ville", y = "Nombre d'accidents") +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    scale_fill_viridis_d()
+    scale_fill_gradient(low = "blue", high = "red")
     print(figure)
     }
 
@@ -152,6 +152,7 @@ affiche_serie_mois <- function(){
     dictionnaire_mois <- c("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Sept", "Octo", "Nov", "Déc")
     print(nbaccident)
     print(numois)
+    numois <- as.numeric(numois)
     dfmois = data.frame(nbaccident, numois)
     figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident)) +
     geom_line() +
