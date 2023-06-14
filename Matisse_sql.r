@@ -17,10 +17,31 @@ incident = sqldf("SELECT descr_grav,region_name,count(descr_grav) as count FROM 
 
 population = sqldf("SELECT descr_grav,region_name,PTOT,count FROM incident LEFT JOIN pop ON incident.region_name =  pop.REG")
 
+nbr_incidents = sqldf("SELECT region_name, SUM(count) AS somme_count FROM population GROUP BY region_name;")
+
 population <- cbind(population, pr_100000 = NA)
 
 population$count <- as.numeric(population$count)
 population$PTOT <- as.numeric(population$PTOT)
 population$pr_100000 = 100000*population$count/population$PTOT
-# sqldf("UPDATE population SET pr_100000 = 100000*population.count/population.PTOT")
-print(population)
+# print(nbr_incidents)
+
+library(tmap)
+tmap_mode(mode = "view")
+library(rnaturalearth)
+library(sf)
+library(dplyr)
+
+france <- ne_states(country = "France", returnclass = "sf")
+
+# Configuration des options de tmap pour améliorer la vitesse d'affichage
+
+map <- tm_shape(france) +
+  tm_polygons(col = ifelse(france$name == "Normandie", "red", "provnum_ne"))
+
+print(map)
+
+# valeurs_acceptees <- unique(france$region)
+
+# # Afficher les valeurs
+# print(valeurs_acceptees)
