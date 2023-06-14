@@ -1,4 +1,28 @@
 require(FactoMineR)
+library(sqldf)
+library(dplyr)
+vecteur1 <- c(1,1,1,3,3)
+vecteur2 <- c(1,2,3) ; vecteur3 <- c("a","b","c")
+vecteur2 <- data.frame(x = vecteur2, y = vecteur3) 
+vecteur1 <- data.frame(id = vecteur1) 
+
+data <- read.csv2(file = "stat_MossMoss.csv")
+infos <- read.csv2(file = "cities.csv", sep = ",")
+pop <- read.csv2(file = "donnees_regions.csv", sep = ";")
+
+pop$REG <- tolower(pop$REG)
+# insee = sqldf("SELECT * FROM vecteur1 LEFT JOIN vecteur2 ON vecteur1.id = vecteur2.x")
+df_groupe = sqldf("SELECT data.descr_grav,infos.region_name FROM data LEFT JOIN infos ON data.id_code_insee = infos.insee_code")
+
+incident = sqldf("SELECT descr_grav,region_name,count(descr_grav) as count FROM df_groupe GROUP BY region_name,descr_grav")
+
+population = sqldf("SELECT descr_grav,region_name,PTOT,count FROM incident LEFT JOIN pop ON incident.region_name =  pop.REG")
+
+population <- cbind(population, pr_100000 = NA)
+
+population$count <- as.numeric(population$count)
+population$PTOT <- as.numeric(population$PTOT)
+population$pr_100000 = 100000*population$count/population$PTOT
 
 data <- read.csv2('stat_Ninho.csv')
 cities <- read.csv2('cities.csv',sep = ",")
@@ -321,47 +345,54 @@ print(ICsCumulB1)
 
 # }
 
+print(summary(modelcumul2)[8][1])
+
+# moisCumulSCE = 0
+# for(i in 1:length(nbaccidentcumul)){
+
+#         moisCumulSCE = moisCumulSCE + (mean(nbaccidentcumul) - (6390.11 + i*61.74))**2
+
+# }
+
+# moisCumulSCT = 0
+# for(i in 1:length(nbaccidentcumul)){
+        
+#         moisCumulSCT = moisCumulSCT + (mean(nbaccidentcumul) - nbaccidentcumul[i])**2
+
+# }
+# print(moisCumulSCE)
+# print(moisCumulSCT)
+
+# moisCumulR2 = moisCumulSCE/moisCumulSCT
+# print(moisCumulR2)
+
+# sCumulSCE = 0
+# sCumulSCT = 0
+
+# for(i in 1:length(nbaccidentcumul2)){
+
+#         sCumulSCE = sCumulSCE + ((1446.05 + i*22.03) - mean(nbaccidentcumul2))**2
+#         sCumulSCT = sCumulSCT + (nbaccidentcumul2[i] - mean(nbaccidentcumul2))**2
+
+
+# }
+# sCumulSCT = sCumulSCT/length(nbaccidentcumul2)
+# sCumulR2 = sCumulSCE/sCumulSCT
+# print(sCumulR2)
+
 # moisRSS = 0
+# moisTSS = 0
+# moisSCE = 0
+
 # for(i in 1:length(valeur1$list_nb)){
 
 #         moisRSS = moisRSS + (valeur1$list_nb[i] - (5752.03 + i*59.21))**2
-
-# }
-
-# print(moisRSS)
-
-moisCumulSCE = 0
-for(i in 1:length(nbaccidentcumul)){
-
-        moisCumulSCE = moisCumulSCE + (mean(nbaccidentcumul[i]) - (6390.11 + i*61.74))**2
-
-}
-
-moisCumulSCT = 0
-for(i in 1:length(nbaccidentcumul)){
-
-        moisCumulSCT = moisCumulSCT + (mean(nbaccidentcumul[i]) - nbaccidentcumul[i])**2
-
-}
-
-moisCumulR2 = moisCumulSCE/moisCumulSCT
-print(moisCumulR2)
-
-sCumulSCE = 0
-for(i in 1:length(nbaccidentcumul2)){
-
-        moisCumulSCE = moisCumulSCE + (mean(nbaccidentcumul[i]) - 1446.05 + i*22.03)**2
-
-}
-# moisTSS = 0
-# for(i in 1:length(valeur1$list_nb)){
-
 #         moisTSS = moisTSS + (valeur1$list_nb[i] - mean(valeur1$list_nb))**2
+#         moisSCE = moisSCE + ((5752.03 + i*59.21) - mean(valeur1$list_nb))**2
 
 # }
-# # moisTSS = moisTSS/length(valeur1$list_nb)
-# print(moisTSS)
 
+# moisTSS = moisTSS/length(valeur1$list_nb)
 # moisSCE = 0
 # for(i in 1:length(valeur1$list_nb)){
 
@@ -410,5 +441,7 @@ for(i in 1:length(nbaccidentcumul2)){
 # print(sR2)
 
 
-
-# PCA = PCA(data)
+USA=as.data.frame(state.x77)
+test = PCA(USA)
+PCA = PCA(population)
+print(PCA)
