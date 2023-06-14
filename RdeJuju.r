@@ -15,10 +15,13 @@ BDD$descr_grav[BDD$descr_grav == "Blessé hospitalisé"] <- 2
 BDD$descr_grav[BDD$descr_grav == "Tué"] <- 3
 fonction_visu <- function(colonne, cumule){
     list_nb <- vector("numeric", 0)
-
+    valeur <- 0
     list_type <- vector("character", 0)
     if(cumule == 0){
     compteur <- 0}
+    if(cumule == 1){
+        valeur <- 0
+    }
     for (elt in unique(colonne)){
         compteur <- 0
         for (element in colonne){
