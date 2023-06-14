@@ -156,7 +156,7 @@ affiche_serie_mois <- function(){
     figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident)) +
     geom_line() +
         labs(title = "Répartition des accidents en fonction 
-             des conditions atmosphériques", x = dictionnaire_mois, y = "Nombre d'accidents" ) +
+             des conditions atmosphériques", x = "les mois", y = "Nombre d'accidents" ) +
         theme_minimal()
     print(figure2)
  }
