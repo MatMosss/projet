@@ -74,11 +74,13 @@ affiche_barre_ville <- function(){
     ville1 <- ville$list_nb[ville$list_nb > 500]
     ville2 <- ville$list_type[ville$list_nb > 500]
     dfville <- data.frame(ville1, ville2)
-    figure <- ggplot(dfville, aes(x = ville2, y = ville1)) +
+    figure <- ggplot(dfville, aes(x = ville2, y = ville1, fill = ville2)) +
     geom_bar(stat = "identity") +
-    labs(title = "Nombre d'accidents par ville", 
-    x = "Ville", y = "Nombre d'accidents") +
-    theme_void()
+    labs(title = "Nombre d'accidents par ville",
+         x = "Ville", y = "Nombre d'accidents") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_viridis_d()
     print(figure)
     }
 
@@ -154,7 +156,7 @@ affiche_serie_mois <- function(){
         theme_void()
     print(figure2)
  }
- #        geom_point() + geom_line() +
+ # geom_point() + geom_line() +
 affiche_serie_semaine <- function(){
     valeur2 <- fonction_visu(BDD2$semaine, 1)
     nbaccidentparsemaine <- valeur2$list_nb
@@ -166,9 +168,10 @@ affiche_serie_semaine <- function(){
     print(numsemaine)
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
     figure4 <- ggplot(data = dfsemaine, aes(x = nbaccidentparsemaine, y = numsemaine)) +
+    geom_line() +
         labs(title = "Répartition des accidents en fonction 
-             des conditions atmosphériques") +
-        theme_void()
+             des conditions atmosphériques", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
+        theme_minimal()
     print("On remarque que la distribution générale des 
     accidents dans le temps ne suit pas un modèle linéaire.
     Cependant, et justement car la variabilité des accidents 
@@ -181,5 +184,3 @@ affiche_serie_semaine <- function(){
     distribution mensuelle des accidents.  ")
     print(figure4)
 }
-affiche_pie_heure()
-print("fin de code")
