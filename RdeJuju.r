@@ -153,10 +153,11 @@ affiche_serie_mois <- function(){
     print(nbaccident)
     print(numois)
     dfmois = data.frame(nbaccident, numois)
-    figure2 <- ggplot(data = dfmois, aes(x = nbaccident, y = numois)) +
+    figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident)) +
+    geom_line() +
         labs(title = "Répartition des accidents en fonction 
-             des conditions atmosphériques") +
-        theme_void()
+             des conditions atmosphériques", x = dictionnaire_mois, y = "Nombre d'accidents" ) +
+        theme_minimal()
     print(figure2)
  }
  # geom_point() + geom_line() +
@@ -170,7 +171,7 @@ affiche_serie_semaine <- function(){
     print(nbaccidentparsemaine)
     print(numsemaine)
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
-    figure4 <- ggplot(data = dfsemaine, aes(x = nbaccidentparsemaine, y = numsemaine)) +
+    figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
     geom_line() +
         labs(title = "Répartition des accidents en fonction 
              des conditions atmosphériques", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
