@@ -25,9 +25,16 @@ reg_arrang_join[14, "somme_count"] <- 0
 reg_arrang_join$somme_count <- as.integer(reg_arrang_join$somme_count)
 # reg_arrang_join$region_name <- str_to_title(reg_arrang_join$region_name)
 
-print(ggplot(regions1) +
-  geom_sf(aes(fill = as.matrix(reg_arrang_join$somme_count))) +
-  scale_fill_continuous(low="white",high="blue")+
-  coord_sf(xlim = c(-5.5, 10), ylim = c(41, 51)) +
-  theme_void())
+# print(ggplot(regions1) +
+#   geom_sf(aes(fill = as.matrix(reg_arrang_join$somme_count))) +
+#   scale_fill_continuous(low="white",high="blue")+
+#   coord_sf(xlim = c(-5.5, 10), ylim = c(41, 51)) +
+#   theme_void())
 
+france_map <- map_data("france")
+print(
+  ggplot(data = france_map, aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill = "gray", color = "black") +
+  coord_map() +
+  theme_void()
+)
