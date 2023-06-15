@@ -4,6 +4,8 @@ source("RdeJuju.r")
 source("histogrammes.r")
 source("population100.R")
 source("regression.R")
+source("tests d’indépendance du chi2.r")
+
 
 # library(sqldf)
 # library(dplyr)
