@@ -1,6 +1,7 @@
 source("Matisse_traitement_donnee.r")
 source("Matisse_sql.r")
 source("RdeJuju.r")
+source("histogrammes.r")
 
 library(sqldf)
 library(dplyr)
@@ -12,7 +13,7 @@ library(stringr)
 
 
 main <- function(){
-    traitement_donnees()
+    # traitement_donnees()
     affiche_pie_athmo()
     affiche_pie_surface()
     #affiche_barre_ville()
@@ -24,5 +25,5 @@ main <- function(){
     affiche_serie_semaine(1)
     download_graph_departement()
     download_graph_regions()
+    Histogramme()
 }
-main()
