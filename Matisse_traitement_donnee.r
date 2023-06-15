@@ -1,4 +1,3 @@
-library(sqldf)
 
 traitement_donnees <- function(){ 
     data <- read.csv2(file = "stat_MossMoss.csv") #on ouvre le fichier 
@@ -66,10 +65,6 @@ traitement_donnees <- function(){
 
     }
 
-    write.csv(data, "stat_MossMossV1.csv", row.names = FALSE)
-
-    write.csv(data, "stat_data.csv", row.names = FALSE)
+    write.csv(data, "stat_data_IA.csv", row.names = FALSE)
 
 }
-
-traitement_donnees()
