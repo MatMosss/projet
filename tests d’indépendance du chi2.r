@@ -1,8 +1,6 @@
-#library
-library(tidyverse)
-library(vcd)
-library(grid)
 
+
+tests_tableaux_indépendance <- function() {
 # Charger les données depuis le fichier CSV
 data <- read.csv("stat_acc_V3.csv", sep=";")
 
@@ -256,3 +254,10 @@ residues <- residuals(test_chi2_8, "stdres")
 print(residues)
 ## Les résultats des tests du chi-carré montrent que le p-value est inférieur à 0,05 pour tous les tests (p-value < 2.2e-16), cela indique que notre hypothese est  rejetée est  les  variables sont dépendantes
 
+
+}
+
+main <- function() {
+  tests_tableaux_indépendance()
+}
+main()
