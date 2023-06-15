@@ -8,15 +8,11 @@ vecteur2 <- c(1,2,3) ; vecteur3 <- c("a","b","c")
 vecteur2 <- data.frame(x = vecteur2, y = vecteur3) 
 vecteur1 <- data.frame(id = vecteur1) 
 
-data <- read.csv2(file = "stat_MossMoss.csv")
-infos <- read.csv2(file = "cities.csv", sep = ",")
 pop <- read.csv2(file = "donnees_regions.csv", sep = ";")
 
 pop$REG <- tolower(pop$REG)
 # insee = sqldf("SELECT * FROM vecteur1 LEFT JOIN vecteur2 ON vecteur1.id = vecteur2.x")
-df_groupe = sqldf("SELECT data.descr_grav,infos.region_name FROM data LEFT JOIN infos ON data.id_code_insee = infos.insee_code")
 
-incident = sqldf("SELECT descr_grav,region_name,count(descr_grav) as count FROM df_groupe GROUP BY region_name,descr_grav")
 
 population = sqldf("SELECT descr_grav,region_name,PTOT,count FROM incident LEFT JOIN pop ON incident.region_name =  pop.REG")
 
@@ -25,6 +21,17 @@ population <- cbind(population, pr_100000 = NA)
 population$count <- as.numeric(population$count)
 population$PTOT <- as.numeric(population$PTOT)
 population$pr_100000 = 100000*population$count/population$PTOT
+
+
+print("oui")
+print(population[1,1])
+
+colonne0 = rep(0,17)
+colonne1 = rep(0,17)
+colonne2 = rep(0,17)
+colonne3 = rep(0,17)
+
+
 
 listv = as.list(unique(population$region_name))
 v = 0;
@@ -40,8 +47,66 @@ population$descr_grav[population$descr_grav == "Blessé léger"] <- 1
 population$descr_grav[population$descr_grav == "Blessé hospitalisé"] <- 2
 population$descr_grav[population$descr_grav == "Tué"] <- 3
 
+print(population[6,5])
+print(population$region_name[5])
+for(i in 1:5){
+
+    for(j in 1:68){
+
+        if(i==1){
+
+        switch(population[j,i], 
+
+            "0"={
+                colonne0[as.numeric(population$region_name[j]) + 1] = population[j,5]
+            },
+            "1"={
+                colonne1[as.numeric(population$region_name[j]) + 1] = population[j,5]
+
+            },
+            "2"={
+                colonne2[as.numeric(population$region_name[j]) + 1] = population[j,5]
+
+            },
+            "3"={
+                colonne3[as.numeric(population$region_name[j]) + 1] = population[j,5]
+
+            }
+
+        )
+        }
+
+    }
+}
+
+print("jjdjnjfjqsdefnjhd")
+print(colonne0)
+print("ikpdv,lkdfhjvjnjknvsoknhvdf")
+print(colonne1)
+print("zagagagagga")
+matriceTESGRANDSMORTS = cbind(colonne0,colonne1,colonne2,colonne3)
+colnames(matriceTESGRANDSMORTS) <- c(0,1,2,3)
+rownames(matriceTESGRANDSMORTS) <- unique(population$region_name)
+
+print(matriceTESGRANDSMORTS)
+
+
+PCAmescouilles = PCA(matriceTESGRANDSMORTS)
+print(PCAmescouilles$eig)
+
+layout(matrix(1:2,nrow=1))
+plot(PCAmescouilles, choix="ind", cex=0.7)
+plot(PCAmescouilles, choix="var")
+
+print(barplot(PCAmescouilles$eig[,2]))
+print(fviz_eig(PCAmescouilles,"eigenvalue","bar"))
+
 population$descr_grav = as.numeric(population$descr_grav)
 population$region_name = as.numeric(population$region_name)
+
+PCA1 = prcomp(matriceTESGRANDSMORTS)
+print(get_eig(PCA1))
+print(fviz_eig(PCA1))
 
 
 data <- read.csv2('stat_Ninho.csv')
@@ -280,6 +345,9 @@ for(i in 2:length(nbaccidentcumul2)){
 model2 <- lm(nbaccident2 ~ nusemaines)
 modelcumul2<-lm(nbaccidentcumul2~nusemaines)
 
+print(summary(model2))
+print(summary(model2)[2,1])
+
 # print(mean(nbaccident2))
 # print((12*639)/12)
 
@@ -464,27 +532,31 @@ ICsCumulB1 = c(1446.05 - 1.96*22.03, 1446.05 + 1.96*22.03)
 # sR2 = sSCE/sTSS
 # print(sR2)
 
+
+
 PCA = PCA(population)
-print(PCA$eig)
-print(class(PCA$eig))
+# print(PCA$eig)
+# print(class(PCA$eig))
 # print(barplot(PCA$eig, main = "Barplot des Eigenvalues de PCA", xlab = "Composante", ylab = "Eigenvalue"))
-listEIG = c()
+# listEIG = c()
 
-data <- data.frame(Composante = 1:length(PCA$eig), Eigenvalue = PCA$eig)
-print(ggplot(data, aes(x = 1:length(PCA$eig), y = PCA$eig)) +
-  geom_bar(stat = "identity", fill = "blue") +
-  labs(title = "Barplot des Eigenvalues de PCA", x = "Composante", y = "Eigenvalue"))
 
-for (i in 6:10){
 
-    listEIG<-append(listEIG,PCA$eig[i])
-}
-print(listEIG)
-# print(PCA$ind)
-# print(PCA$var)
-listsuite = c(1,2,3,4,5)
-dfeig =data.frame(listEIG, listsuite)
-print(dfeig)
+# for (i in 6:10){
+
+#     listEIG<-append(listEIG,PCA$eig[i])
+# }
+# print(listEIG)
+
+# data <- data.frame(Composante = 1:length(PCA$eig), Eigenvalue = listEIG)
+# print(ggplot(data, aes(x = 1:length(PCA$eig), y = listEIG)) +
+#   geom_bar(stat = "identity", fill = "blue") +
+#   labs(title = "Barplot des Eigenvalues de PCA", x = "Composante", y = "Eigenvalue"))
+# # print(PCA$ind)
+# # print(PCA$var)
+# listsuite = c(1,2,3,4,5)
+# dfeig =data.frame(listEIG, listsuite)
+# print(dfeig)
 # figure <- ggplot(dfeig, aes(x = listEIG, y = listsuite, fill=listsuite)) + geom_bar()
 
 # print(figure)
