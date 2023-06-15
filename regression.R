@@ -19,6 +19,8 @@ fonction_visu <- function(colonne){
 
 regressions <-function(data){
 
+    data =read.csv2('stat_data_IA.csv')
+
     data$date<- as.Date(data$date,format="%Y-%m-%d %H:%M:%S")
     data$mois<-format(data$date,"%m")
     data$semaines <-format(data$date,"%U")
@@ -102,5 +104,3 @@ regressions <-function(data){
     ICsCumulB1 = c(1446.05 - 1.96*22.03, 1446.05 + 1.96*22.03)
 
 }
-
-regressions(read.csv2('stat_Ninho.csv'))

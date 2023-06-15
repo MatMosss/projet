@@ -2,6 +2,8 @@ source("Matisse_traitement_donnee.r")
 source("Matisse_sql.r")
 source("RdeJuju.r")
 source("histogrammes.r")
+source("population100.R")
+source("regression.R")
 
 library(sqldf)
 library(dplyr)
@@ -31,4 +33,6 @@ main <- function(){
     download_graph_departement()
     download_graph_regions()
     Histogramme()
+    regressions()
+    ACP()
 }

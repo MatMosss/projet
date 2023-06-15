@@ -112,10 +112,13 @@ population2_100 <-function(){
 
 ACP <-function(){
 
-    population = population_100()
-    PCA = PCA(population)
-    print(PCA$eig)
+    population1 = population_100()
+    PCA1 = PCA(population1)
+    print(PCA1$eig)
+    fviz_eig(PCA1)
 
+    population2 = population2_100()
+    PCA2 = PCA(population2)
+    print(PCA2$eig)
+    fviz_eig(PCA2)
 }
-population_100()
-ACP()
