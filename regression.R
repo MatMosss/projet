@@ -23,10 +23,10 @@ regressions <-function(data){
     data$mois<-format(data$date,"%m")
     data$semaines <-format(data$date,"%U")
 
-    write.csv(data, "stat_nino3.csv", row.names = FALSE)
+    write.csv(data, "temp.csv", row.names = FALSE)
 
 
-    BDD2 <- read.csv2(file = "stat_nino3.csv", sep = ",")
+    BDD2 <- read.csv2(file = "temp.csv", sep = ",")
 
     valeur1 <- fonction_visu(BDD2$mois)
     nbaccident <- as.numeric(valeur1$list_nb)
@@ -44,9 +44,9 @@ regressions <-function(data){
     modelcumul<-lm(nbaccidentcumul~numois)
 
     par(mfrow=c(1,4))
-    
 
-    plot(numois,nbaccident, col = "blue",title("oui"))
+
+    print(plot(numois,nbaccident, col = "blue"))
     abline(lm(nbaccident ~ numois))
 
     plot(numois,nbaccidentcumul, col = "red")
