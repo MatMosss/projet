@@ -18,7 +18,7 @@ Histogramme <- function() {
   etiquettes <- c("0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75-84", "85-94", "95-104", "105-124")
   
   # Tracer l'histogramme de la quantité d'accidents par tranche d'âge 
-  barplot(nombre_accidents, 
+  hist1 <- barplot(nombre_accidents, 
           main = "Quantité d'accidents par tranche d'âge",
           xlab = "Tranche d'âge",
           ylab = "Nombre d'accidents",
@@ -35,7 +35,7 @@ Histogramme <- function() {
   moyenne_mensuelle <- aggregate(Num_Acc ~ mois, data, FUN = length)
   
   # Tracer l'histogramme
-  barplot(moyenne_mensuelle$Num_Acc, 
+  hist2 <- barplot(moyenne_mensuelle$Num_Acc, 
           names.arg = moyenne_mensuelle$mois, 
           xlab = "Mois", 
           ylab = "Nombre d'accidents", 

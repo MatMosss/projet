@@ -1,14 +1,19 @@
-# source("RdeJuju.r")
-library(ggplot2)
+source("Matisse_traitement_donnee.r")
+source("Matisse_sql.r")
+source("RdeJuju.r")
+source("histogrammes.r")
+
 library(sqldf)
-# library(dplyr)
-# library(maps)
-# library(rmapshaper)
+library(dplyr)
+library(maps)
+library(ggplot2)
+library(rmapshaper)
 library(sf)
 library(stringr)
 
 
 main <- function(){
+    # traitement_donnees()
     affiche_pie_athmo()
     affiche_pie_surface()
     #affiche_barre_ville()
