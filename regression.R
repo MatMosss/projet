@@ -17,7 +17,7 @@ fonction_visu <- function(colonne){
     return(list(list_nb = list_nb, list_type = list_type))
 }
 
-regressions <-function(){
+regressions <-function(data){
 
     data$date<- as.Date(data$date,format="%Y-%m-%d %H:%M:%S")
     data$mois<-format(data$date,"%m")
@@ -43,7 +43,10 @@ regressions <-function(){
     model <- lm(nbaccident ~ numois)
     modelcumul<-lm(nbaccidentcumul~numois)
 
-    plot(numois,nbaccident, col = "blue")
+    par(mfrow=c(1,4))
+    
+
+    plot(numois,nbaccident, col = "blue",title("oui"))
     abline(lm(nbaccident ~ numois))
 
     plot(numois,nbaccidentcumul, col = "red")
@@ -100,5 +103,4 @@ regressions <-function(){
 
 }
 
-data <- read.csv2('stat_Ninho.csv')
-regressions()
+regressions(read.csv2('stat_Ninho.csv'))

@@ -22,6 +22,7 @@ population$count <- as.numeric(population$count)
 population$PTOT <- as.numeric(population$PTOT)
 population$pr_100000 = 100000*population$count/population$PTOT
 
+write.csv(population, "pop100I.csv",row.names = FALSE)
 
 print("oui")
 print(population[1,1])
@@ -89,6 +90,9 @@ colnames(matriceTESGRANDSMORTS) <- c(0,1,2,3)
 rownames(matriceTESGRANDSMORTS) <- unique(population$region_name)
 
 print(matriceTESGRANDSMORTS)
+
+write.csv(matriceTESGRANDSMORTS, "pop100I.csv",row.names = FALSE)
+
 
 
 PCAmescouilles = PCA(matriceTESGRANDSMORTS)
