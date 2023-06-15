@@ -126,7 +126,7 @@ download_graph_regions <- function(type_graph){
     labs(title = title)+
     labs(fill = legende) +
     theme(
-      plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "white"),
+      plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "white"),
     legend.text = element_text(color = "white"),
     legend.title = element_text(color = "white")
     )
@@ -135,6 +135,7 @@ download_graph_regions <- function(type_graph){
   name3 <- ".png"
   path = paste(name1, name2, name3)
   ggsave(path, plot = plot, device = "png")
+  print(nbr_incidents_reg)
 }  
 
 
@@ -180,7 +181,7 @@ download_graph_departement <- function(type_graph){
   labs(title = title ) +
   labs(fill = legende) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "white"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "white"),
     legend.text = element_text(color = "white"),
     legend.title = element_text(color = "white")
 
@@ -200,4 +201,4 @@ download_graph_departement("dangerosite")
 download_graph_departement("somme_accident")
 download_graph_departement("pr_100000")
 
-
+download_graph_regions("somme_accident")
