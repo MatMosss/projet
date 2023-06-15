@@ -53,7 +53,6 @@ en france en 2019) or 7296/73563*100 = 10% d'accident lié à la pluie legère
 on ne peut en déduire que les accidents dépendent 
 de conditions atmosphériques ")
     ggsave("figure/figureathmo.png", figure, dpi =300)
-    print(figure)
 }
 affiche_pie_surface <- function(){
     surface <- fonction_visu(BDD$descr_etat_surf, 0)
@@ -71,7 +70,6 @@ affiche_pie_surface <- function(){
     12250/73643*100 = 16,6% or il pleut en moyenne 15% du temps 
     et la pluie peut mettre du temps à sécher, 
     on ne peut pas conclure que les accidents sont lié à la surface")
-    print(figure1)
     ggsave("figure/figuresurface.png", figure1, dpi =300)
     }
 affiche_barre_ville <- function(){
@@ -86,7 +84,6 @@ affiche_barre_ville <- function(){
     theme(plot.title = element_text(face = "bold", hjust = 0.5)) +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_fill_discrete()
-    print(figure)
     ggsave("figure/figureville.png", figure, dpi =300)
 
     }
@@ -116,7 +113,6 @@ affiche_pie_heure <- function(){
          x = "horraire", y = "Nombre d'accidents") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_fill_discrete()
-    print(figure2)
     ggsave("figure/figureheure.png", figure2, dpi =300)
 
 }
@@ -132,7 +128,6 @@ affiche_pie_gravite <- function(){
         labs(title = "Répartition des accidents en fonction de la gravité",fill = "donnée gravité",
     x = "", y="nb d'accident") +
         theme(plot.title = element_text(face = "bold", hjust=0.5))
-    print(figure1)
         ggsave("figure/figuregrav.png", figure1, dpi =300)
 
 }
@@ -157,13 +152,9 @@ affiche_serie_mois <- function(CUMUL){
     numois <- valeur1$list_type
 
     dictionnaire_mois <- c("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Sept", "Octo", "Nov", "Déc")
-    print(nbaccident)
-    print(numois)
+
     numois <- as.numeric(numois)
     dfmois = data.frame(nbaccident, numois)
-    print(dfmois)
-    
-    print(figure2)
     if(CUMUL== 0){
         figure7 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident, fill = nbaccident)) +
         geom_line() +
@@ -174,10 +165,8 @@ affiche_serie_mois <- function(CUMUL){
     }
     if(CUMUL== 1){
         figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident, fill = nbaccident)) +
-        geom_line() +
-        labs(title = "série chronologique des accidents en fonction des mois cumulés", x = "les mois", y = "Nombre d'accidents" ) +
-        theme() +
-        scale_x_continuous(breaks = numois, labels = dictionnaire_mois)
+        geom_line() +labs(title = "série chronologique des accidents en fonction des mois cumulés", x = "les mois", y = "Nombre d'accidents" ) +
+        theme() + scale_x_continuous(breaks = numois, labels = dictionnaire_mois)
         ggsave("figure/figureseriemoiscumul.png", figure2, dpi =300)
     }
 
@@ -213,7 +202,7 @@ affiche_serie_semaine <- function(CUMUL){
     if(CUMUL== 1){
         figure8 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
         geom_line() +
-        labs(title = "Série chrologique des accidents pour des semaines cumulés", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
+        labs(title = "Série chrologique des accidents en fonction des semaines cumulés", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
         theme()
         ggsave("figure/figureseriesemainecumul.png", figure8, dpi =300)
     }
