@@ -14,6 +14,7 @@ library(tidyverse)
 library(vcd)
 library(grid)
 
+
 main <- function(){
     # traitement_donnees()
     affiche_pie_athmo()
@@ -28,4 +29,5 @@ main <- function(){
     download_graph_departement()
     download_graph_regions()
     Histogramme()
+    tests_tableaux_indépendance ()
 }

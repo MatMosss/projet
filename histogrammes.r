@@ -51,7 +51,7 @@ Histogramme <- function() {
     ggsave("histogramme/histogrammemoyennemois.png",plot = hist2, dpi =300)
 }
 
-# Appeler la fonction dans le bloc main
+
 main <- function() {
   Histogramme()
 }
