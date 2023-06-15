@@ -183,8 +183,10 @@ tableau_croise8 <- table(data$descr_etat_surf,data$descr_athmo )
 dev.new()
 
 # Graphe 8
-mosaicplot(tableau_croise8, main = "Tableau croisé 8: entre description de l'état de la surfaces et description des conditions atmosphériques", shade = TRUE,
+a<-mosaicplot(tableau_croise8, main = "Tableau croisé 8: entre description de l'état de la surfaces et description des conditions atmosphériques", shade = TRUE,
            color = TRUE, las = 2, cex.axis = 0.7, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph1.png"))
+dev.off() 
 print(tableau_croise8)
 
 #-test----------chi2-----------------------
@@ -232,3 +234,18 @@ print(test_chi2_8)
 residues <- residuals(test_chi2_8, "stdres")
 print(residues)
 ## Les résultats des tests du chi-carré montrent que le p-value est inférieur à 0,05 pour tous les tests (p-value < 2.2e-16), cela indique que notre hypothese est  rejetée est  les  variables sont dépendantes
+
+
+
+  # Enregistrer les graphiques dans un dossier
+  dir.create("Tableaux", showWarnings = FALSE)
+  dev.copy(png, file.path("Tableaux", "graph2.png"))
+  dev.copy(png, file.path("Tableaux", "graph3.png"))
+  dev.copy(png, file.path("Tableaux", "graph4.png"))
+  dev.copy(png, file.path("Tableaux", "graph5.png"))
+  dev.copy(png, file.path("Tableaux", "graph6.png"))
+  dev.copy(png, file.path("Tableaux", "graph7.png"))
+  dev.copy(png, file.path("Tableaux", "graph8.png"))
+
+  # Fermer toutes les fenêtres graphiques
+  dev.off()

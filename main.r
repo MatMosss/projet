@@ -10,7 +10,9 @@ library(ggplot2)
 library(rmapshaper)
 library(sf)
 library(stringr)
-
+library(tidyverse)
+library(vcd)
+library(grid)
 
 main <- function(){
     # traitement_donnees()
