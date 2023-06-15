@@ -1,5 +1,5 @@
 
-#Histo 1
+#histogramme de la quantité d'accidents par tranche d'âge
 # Charger le fichier CSV
 data <- read.csv("stat_acc_V3.csv", sep = ";")
 
@@ -28,7 +28,7 @@ barplot(nombre_accidents,
 
 
 
-#Histo 2
+#Moyenne mensuelle des accidents
 # Créer une nouvelle colonne pour le mois
 data$date <- as.Date(data$date)
 
