@@ -1,6 +1,10 @@
 library("ggplot2")
-BDD <- read.csv2(file = "stat_data_IA.csv")
-
+BDD <- read.csv2(file = "stat_juju.csv")
+BDD[BDD == "NULL"] <- " NA"
+BDD$descr_grav[BDD$descr_grav == "Indemne"] <- 0
+BDD$descr_grav[BDD$descr_grav == "Blessé léger"] <- 1
+BDD$descr_grav[BDD$descr_grav == "Blessé hospitalisé"] <- 2
+BDD$descr_grav[BDD$descr_grav == "Tué"] <- 3
 fonction_visu <- function(colonne, cumule){
     list_nb <- vector("numeric", 0)
     valeur <- 0
@@ -113,8 +117,23 @@ affiche_pie_gravite <- function(){
         ggsave("figure/figuregrav.png", figure1, dpi =300)
 
 }
+
+ecriture_csv <- function(){
+    listeVide = c()
+    for(elt in BDD$date){
+        mois <- substr(elt, start=6, stop=7)
+        listeVide <- append(listeVide, mois)
+    }
+    BDD$mois <- listeVide
+
+    BDD$date1 <- as.Date(BDD$date, format = "%Y-%m-%d %H:%M:%S")
+    BDD$semaine <- format(BDD$date1, "%U")
+    write.csv(BDD, "stat_juju3.csv", row.names = FALSE)
+}
+BDD2 <- read.csv2(file = "stat_juju3.csv", sep = ",")
+
 affiche_serie_mois <- function(CUMUL){
-    valeur1 <- fonction_visu(BDD$mois, CUMUL)
+    valeur1 <- fonction_visu(BDD2$mois, CUMUL)
     nbaccident <- valeur1$list_nb
     numois <- valeur1$list_type
 
@@ -140,7 +159,7 @@ affiche_serie_mois <- function(CUMUL){
  }
  # geom_point() + geom_line() +
 affiche_serie_semaine <- function(CUMUL){
-    valeur2 <- fonction_visu(BDD$semaine, CUMUL)  
+    valeur2 <- fonction_visu(BDD2$semaine, CUMUL)  
     nbaccidentparsemaine <- valeur2$list_nb
     numsemaine <- valeur2$list_type
     numsemaine <- as.numeric(numsemaine)
@@ -148,7 +167,6 @@ affiche_serie_semaine <- function(CUMUL){
     nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
 
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
-    
     if(CUMUL== 0){
         figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
         geom_line() +
