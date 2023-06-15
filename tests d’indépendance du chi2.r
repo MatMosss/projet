@@ -3,7 +3,7 @@ library(vcd)
 library(grid)
 
 # Charger les données depuis le fichier CSV
-data <- read.csv("redol.csv", sep=";")
+data <- read.csv("stat_acc_V3.csv", sep=";")
 
 #------------------------------------------------------------------------------
 
