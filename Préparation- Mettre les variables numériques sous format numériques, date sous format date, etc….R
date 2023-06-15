@@ -1,4 +1,4 @@
-#Mettre les variables numériques sous format numériques, date sous format date, etc
+#Mettre les variables numériques sous format numériques, date sous format date, etc...
 data <- read.csv("stat_acc_V3.csv", header = TRUE, sep = ";")
 
 data$id_usa <- as.numeric(data$id_usa)
