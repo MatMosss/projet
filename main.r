@@ -13,6 +13,9 @@ library(stringr)
 library(tidyverse)
 library(vcd)
 library(grid)
+library(factoextra)
+require(FactoMineR)
+
 
 main <- function(){
     # traitement_donnees()
