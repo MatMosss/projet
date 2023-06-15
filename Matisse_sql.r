@@ -10,7 +10,7 @@ library(stringr)
 
 
 return_dataframe_for_print_graph <- function(){  
-  data <- read.csv2(file = "stat_MossMoss.csv")
+  data <- read.csv2(file = "stat_data.csv", sep = ",")
   infos <- read.csv2(file = "cities.csv", sep = ",")
   pop_reg <- read.csv2(file = "donnees_regions.csv", sep = ";")
   pop_dep <- read.csv2(file = "donnees_departements.csv", sep = ";")
@@ -104,12 +104,18 @@ download_graph_regions <- function(type_graph){
 
     if(type_graph == "pr_100000"){
       dataframe <- reg_arrang_join$pr_100000
+    title <- "Nombre d'accidents par région pour 100000 habitants"
+    legende <- "Nombre d'accidents"
     }
     else if (type_graph == "somme_accident") {
       dataframe <- reg_arrang_join$somme_count
+    title <- "Nombre accidents par région"
+    legende <- "Nombre d'accidents"
     }
     else if (type_graph == "dangerosite") {
       dataframe <- reg_arrang_join$sum
+    title <- "Niveau de gravité par région"
+    legende <- "3 = Tué\n2 = hospitalisé\n1 = blessé léger\n0 = indemne"
     }
 
   plot <- graph_nbr_incident <- ggplot(regions1) +
@@ -117,10 +123,10 @@ download_graph_regions <- function(type_graph){
     scale_fill_continuous(low="white",high="blue")+
     coord_sf(xlim = c(-5.5, 10), ylim = c(41, 51)) +
     theme_void()+
-    labs(title = "nombre accident region")+
-    labs(fill = "nombre accident pour 30000 habitants") +
+    labs(title = title)+
+    labs(fill = legende) +
     theme(
-      plot.title = element_text(face = "bold", hjust = 0.5, size = 20, color = "white"),
+      plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "white"),
     legend.text = element_text(color = "white"),
     legend.title = element_text(color = "white")
     )
@@ -152,12 +158,18 @@ download_graph_departement <- function(type_graph){
 
   if(type_graph == "pr_100000"){
     dataframe <- dep_arrang_join$pr_100000
+    title <- "Nombre d'accidents par département pour 100000 habitants"
+    legende <- "Nombre d'accidents"
   }
   else if (type_graph == "somme_accident") {
     dataframe <- dep_arrang_join$somme_count
+    title <- "Nombre accidents par département"
+    legende <- "Nombre d'accidents"
   }
   else if (type_graph == "dangerosite") {
     dataframe <- dep_arrang_join$sum
+    title <- "Niveau de gravité par département"
+    legende <- "3 = Tué\n2 = hospitalisé\n1 = blessé léger\n0 = indemne"
   }
   
   plot <- ggplot(data = france_map, aes(x = long, y = lat, group = group, fill = dataframe)) +
@@ -165,10 +177,10 @@ download_graph_departement <- function(type_graph){
   scale_fill_continuous(low = "white", high = "blue", na.value = "white") +
   coord_map() +
   theme_void() +
-  labs(title = "nombre accident département") +
-  labs(fill = "nombre accident pour 30000 habitants") +
+  labs(title = title ) +
+  labs(fill = legende) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 20, color = "white"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "white"),
     legend.text = element_text(color = "white"),
     legend.title = element_text(color = "white")
 
@@ -181,3 +193,11 @@ download_graph_departement <- function(type_graph){
 }
 
 download_graph_regions("dangerosite")
+download_graph_regions("somme_accident")
+download_graph_regions("pr_100000")
+
+download_graph_departement("dangerosite")
+download_graph_departement("somme_accident")
+download_graph_departement("pr_100000")
+
+
