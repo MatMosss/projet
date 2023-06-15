@@ -20,4 +20,5 @@ main <- function(){
     affiche_serie_semaine(1)
     download_graph_departement()
     download_graph_regions()
+    Histogramme()
 }
