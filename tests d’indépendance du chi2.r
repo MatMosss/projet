@@ -19,8 +19,11 @@ tableau_croise1 <- table(data$descr_grav, data$descr_motif_traj)
 dev.new()
 
 # Graphe 1
-mosaicplot(tableau_croise1, main = "Tableau croisé 1: entre description de la gravité des blessures et la description du motif du trajet", shade = TRUE,
+tab1<-mosaicplot(tableau_croise1, main = "Tableau croisé 1: entre description de la gravité des blessures et la description du motif du trajet", shade = TRUE,
            color = TRUE, las = 1, cex.axis = 0.8, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph2.png"))
+dev.off() 
+
 print(tableau_croise1)
 
 
@@ -45,8 +48,10 @@ tableau_croise2 <- table(data$place, data$descr_grav)
 dev.new()
 
 # Graphe 2
-mosaicplot(tableau_croise2, main = "Tableau croisé 2: entre description de la gravité des blessures et la place occupée dans le véhicule", shade = TRUE,
+tab2<-mosaicplot(tableau_croise2, main = "Tableau croisé 2: entre description de la gravité des blessures et la place occupée dans le véhicule", shade = TRUE,
            color = TRUE, las = 1, cex.axis = 0.8, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph2.png"))
+dev.off() 
 print(tableau_croise2)
 
 #-3---------------------------------
@@ -79,8 +84,11 @@ tableau_croise3 <- table(data$descr_grav, data$descr_dispo_secu)
 dev.new()
 
 # Graphe 3
-mosaicplot(tableau_croise3, main = "Tableau croisé 3: entre description de la gravité des blessures et description de la disponibilité de l'équipement de sécurité utilisé", shade = TRUE,
+tab3<-mosaicplot(tableau_croise3, main = "Tableau croisé 3: entre description de la gravité des blessures et description de la disponibilité de l'équipement de sécurité utilisé", shade = TRUE,
            color = TRUE, las = 1, cex.axis = 0.6, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph3.png"))
+dev.off() 
+print(tableau_croise3)
 
 #-4---------------------------------
 #filtrage
@@ -94,9 +102,12 @@ tableau_croise4 <- table(data$descr_grav, data$description_intersection)
 dev.new()
 
 # Graphe 4
-mosaicplot(tableau_croise4, main = "Tableau croisé 4: entre description de la gravité des blessures et la description de l'intersection", shade = TRUE,
+tab4<-mosaicplot(tableau_croise4, main = "Tableau croisé 4: entre description de la gravité des blessures et la description de l'intersection", shade = TRUE,
            color = TRUE, las = 1, cex.axis = 0.8, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph4.png"))
+dev.off() 
 print(tableau_croise4)
+
 #-5---------------------------------
 
 # Réaliser un tableau croisé entre deux variables
@@ -106,9 +117,12 @@ tableau_croise5 <- table(data$descr_grav, data$descr_agglo)
 dev.new()
 
 # Graphe 5
-mosaicplot(tableau_croise5, main = "Tableau croisé 5: entre description de la gravité des blessures et la description de l'environnement urbain où s'est produit l'accident", shade = TRUE,
+tab5<-mosaicplot(tableau_croise5, main = "Tableau croisé 5: entre description de la gravité des blessures et la description de l'environnement urbain où s'est produit l'accident", shade = TRUE,
            color = TRUE, las = 1, cex.axis = 0.8, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph5.png"))
+dev.off() 
 print(tableau_croise5)
+
 #-6---------------------------------
 
 # Filtrer les données pour exclure les catégories indésirables
@@ -134,8 +148,11 @@ tableau_croise6 <- table(filtered_data$descr_type_col, filtered_data$descr_athmo
 dev.new()
 
 # Graphe 6
-mosaicplot(tableau_croise6, main = "Tableau croisé 6: entre Type de collisions et états d'atmosphérique", shade = TRUE,
+tab6<-mosaicplot(tableau_croise6, main = "Tableau croisé 6: entre Type de collisions et états d'atmosphérique", shade = TRUE,
            color = TRUE, las = 1, cex.axis = 0.8, cex.lab = 0.8)
+dev.copy(png, file.path("Tableaux", "graph6.png"))
+dev.off() 
+
 print(tableau_croise6)
 
 #-7------------------------------
@@ -163,9 +180,13 @@ tableau_croise7 <- table( data$description_intersection,data$descr_lum)
 dev.new()
 
 # Graphe 7
-mosaicplot(tableau_croise7, main = "Tableau croisé 7: entre description de l'intersection et description de la luminosité", shade = TRUE,
+tab7<-mosaicplot(tableau_croise7, main = "Tableau croisé 7: entre description de l'intersection et description de la luminosité", shade = TRUE,
            color = TRUE, las = 2, cex.axis = 0.8, cex.lab = 0.8)
+
+dev.copy(png, file.path("Tableaux", "graph7.png"))
+dev.off() 
 print(tableau_croise7)
+
 
 #-8--------------------------------
 
@@ -183,9 +204,9 @@ tableau_croise8 <- table(data$descr_etat_surf,data$descr_athmo )
 dev.new()
 
 # Graphe 8
-a<-mosaicplot(tableau_croise8, main = "Tableau croisé 8: entre description de l'état de la surfaces et description des conditions atmosphériques", shade = TRUE,
+tab8<-mosaicplot(tableau_croise8, main = "Tableau croisé 8: entre description de l'état de la surfaces et description des conditions atmosphériques", shade = TRUE,
            color = TRUE, las = 2, cex.axis = 0.7, cex.lab = 0.8)
-dev.copy(png, file.path("Tableaux", "graph1.png"))
+dev.copy(png, file.path("Tableaux", "graph8.png"))
 dev.off() 
 print(tableau_croise8)
 
@@ -235,17 +256,3 @@ residues <- residuals(test_chi2_8, "stdres")
 print(residues)
 ## Les résultats des tests du chi-carré montrent que le p-value est inférieur à 0,05 pour tous les tests (p-value < 2.2e-16), cela indique que notre hypothese est  rejetée est  les  variables sont dépendantes
 
-
-
-  # Enregistrer les graphiques dans un dossier
-  dir.create("Tableaux", showWarnings = FALSE)
-  dev.copy(png, file.path("Tableaux", "graph2.png"))
-  dev.copy(png, file.path("Tableaux", "graph3.png"))
-  dev.copy(png, file.path("Tableaux", "graph4.png"))
-  dev.copy(png, file.path("Tableaux", "graph5.png"))
-  dev.copy(png, file.path("Tableaux", "graph6.png"))
-  dev.copy(png, file.path("Tableaux", "graph7.png"))
-  dev.copy(png, file.path("Tableaux", "graph8.png"))
-
-  # Fermer toutes les fenêtres graphiques
-  dev.off()
