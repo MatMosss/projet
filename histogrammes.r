@@ -25,10 +25,10 @@ barplot(nombre_accidents,
         names.arg = etiquettes,
         ylim = c(0, 20000))
 
+#----------------------------------------------------------------
 
 
-
-#Moyenne mensuelle des accidents
+#histogramme de Moyenne mensuelle des accidents
 # Créer une nouvelle colonne pour le mois
 data$date <- as.Date(data$date)
 
