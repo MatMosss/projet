@@ -19,6 +19,7 @@ library(factoextra)
 require(FactoMineR)
 
 
+
 main <- function(){
     # traitement_donnees()
     affiche_pie_athmo()
@@ -33,6 +34,11 @@ main <- function(){
     download_graph_departement()
     download_graph_regions()
     Histogramme()
+<<<<<<< HEAD
     regressions()
     ACP()
 }
+=======
+    tests_tableaux_indépendance ()
+}
+>>>>>>> d5fbf63c575aecde445883775110ac1c09cb4da1

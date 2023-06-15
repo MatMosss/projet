@@ -47,11 +47,17 @@ regressions <-function(data){
 
     par(mfrow=c(1,4))
 
+<<<<<<< HEAD
 
     print(plot(numois,nbaccident, col = "blue"))
+=======
+    plot(numois,nbaccident, col = "blue",title("Accidents en fonction 
+    des mois"))
+>>>>>>> d5fbf63c575aecde445883775110ac1c09cb4da1
     abline(lm(nbaccident ~ numois))
 
-    plot(numois,nbaccidentcumul, col = "red")
+    plot(numois,nbaccidentcumul, col = "red",title("Accidents cumulés en fonction
+     des mois"))
     abline(lm(nbaccidentcumul ~ numois))
     
     print(summary(model))
@@ -75,12 +81,14 @@ regressions <-function(data){
     model2 <- lm(nbaccident2 ~ nusemaines)
     modelcumul2<-lm(nbaccidentcumul2~nusemaines)
 
-    plot(nusemaines,nbaccident2,col ="blue")
+    plot(nusemaines,nbaccident2,col ="blue",title("Accidents en fonction
+     des semaines"))
     abline(lm(nbaccident2 ~ nusemaines))
     print(summary(model2))
     print(anova(model2))
 
-    plot(nusemaines,nbaccidentcumul2, col = "red")
+    plot(nusemaines,nbaccidentcumul2, col = "red",title("Accidents cumulés en fonction
+     des semaines"))
     abline(lm(nbaccidentcumul2 ~ nusemaines))
     print(summary(modelcumul2))
     print(anova(modelcumul2))

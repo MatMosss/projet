@@ -1,3 +1,4 @@
+library("ggplot2")
 Histogramme <- function() {
   #histogramme de la quantité d'accidents par tranche d'âge
   # Charger le fichier CSV
@@ -18,13 +19,17 @@ Histogramme <- function() {
   etiquettes <- c("0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75-84", "85-94", "95-104", "105-124")
   
   # Tracer l'histogramme de la quantité d'accidents par tranche d'âge 
-  hist1 <- barplot(nombre_accidents, 
-          main = "Quantité d'accidents par tranche d'âge",
-          xlab = "Tranche d'âge",
-          ylab = "Nombre d'accidents",
-          names.arg = etiquettes,
-          ylim = c(0, 20000))
-  
+  dfetiquette = data.frame(nombre_accidents, etiquettes)
+  print(dfetiquette)
+  hist1 <- ggplot(dfetiquette, aes(etiquettes, nombre_accidents, fill = etiquettes)) +
+          geom_bar(stat = "identity") +
+    labs(title = "Nombre d'accidents par tranche d'âge",
+         x = "tranche d'âge", y = "Nombre d'accidents") +
+    theme(plot.title = element_text(face = "bold", hjust = 0.5)) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_discrete()
+    ggsave("histogramme/histogrammetrancheage.png",plot = hist1, dpi =300)
+
   #histogramme de Moyenne mensuelle des accidents
   # Créer une nouvelle colonne pour le mois
   data$date <- as.Date(data$date)
@@ -33,17 +38,21 @@ Histogramme <- function() {
   
   # Calculer la moyenne mensuelle des accidents
   moyenne_mensuelle <- aggregate(Num_Acc ~ mois, data, FUN = length)
-  
+  dfmensuelle = data.frame(moyenne_mensuelle$Num_Acc, moyenne_mensuelle$mois)
+  print(dfmensuelle)
   # Tracer l'histogramme
-  hist2 <- barplot(moyenne_mensuelle$Num_Acc, 
-          names.arg = moyenne_mensuelle$mois, 
-          xlab = "Mois", 
-          ylab = "Nombre d'accidents", 
-          main = "Moyenne mensuelle des accidents")
+  hist2 <- ggplot(dfmensuelle, aes(moyenne_mensuelle$mois, moyenne_mensuelle$Num_Acc, fill = moyenne_mensuelle$mois)) +
+          geom_bar(stat = "identity") +
+    labs(title = "Moyenne mensuelle des accidents",
+         x = "Mois", y = "Nombre d'accidents") +
+    theme(plot.title = element_text(face = "bold", hjust = 0.5)) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_discrete()
+    ggsave("histogramme/histogrammemoyennemois.png",plot = hist2, dpi =300)
 }
 
-# Appeler la fonction dans le bloc main
+
 main <- function() {
   Histogramme()
 }
-
+main()

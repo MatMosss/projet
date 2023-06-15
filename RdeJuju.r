@@ -167,7 +167,6 @@ affiche_serie_semaine <- function(CUMUL){
     nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
 
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
-    
     if(CUMUL== 0){
         figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
         geom_line() +
