@@ -15,10 +15,13 @@ BDD$descr_grav[BDD$descr_grav == "Blessé hospitalisé"] <- 2
 BDD$descr_grav[BDD$descr_grav == "Tué"] <- 3
 fonction_visu <- function(colonne, cumule){
     list_nb <- vector("numeric", 0)
-
+    valeur <- 0
     list_type <- vector("character", 0)
     if(cumule == 0){
     compteur <- 0}
+    if(cumule == 1){
+        valeur <- valeur + valeur
+    }
     for (elt in unique(colonne)){
         compteur <- 0
         for (element in colonne){
@@ -74,11 +77,13 @@ affiche_barre_ville <- function(){
     ville1 <- ville$list_nb[ville$list_nb > 500]
     ville2 <- ville$list_type[ville$list_nb > 500]
     dfville <- data.frame(ville1, ville2)
-    figure <- ggplot(dfville, aes(x = ville2, y = ville1)) +
+    figure <- ggplot(dfville, aes(x = ville2, y = ville1, fill = ville2)) +
     geom_bar(stat = "identity") +
-    labs(title = "Nombre d'accidents par ville", 
-    x = "Ville", y = "Nombre d'accidents") +
-    theme_void()
+    labs(title = "Nombre d'accidents par ville",
+         x = "Ville", y = "Nombre d'accidents") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_gradient(low = "blue", high = "red")
     print(figure)
     }
 
@@ -147,14 +152,16 @@ affiche_serie_mois <- function(){
     dictionnaire_mois <- c("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Sept", "Octo", "Nov", "Déc")
     print(nbaccident)
     print(numois)
+    numois <- as.numeric(numois)
     dfmois = data.frame(nbaccident, numois)
-    figure2 <- ggplot(data = dfmois, aes(x = nbaccident, y = numois)) +
+    figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident)) +
+    geom_line() +
         labs(title = "Répartition des accidents en fonction 
-             des conditions atmosphériques") +
-        theme_void()
+             des conditions atmosphériques", x = "les mois", y = "Nombre d'accidents" ) +
+        theme_minimal()
     print(figure2)
  }
- #        geom_point() + geom_line() +
+ # geom_point() + geom_line() +
 affiche_serie_semaine <- function(){
     valeur2 <- fonction_visu(BDD2$semaine, 1)
     nbaccidentparsemaine <- valeur2$list_nb
@@ -165,10 +172,11 @@ affiche_serie_semaine <- function(){
     print(nbaccidentparsemaine)
     print(numsemaine)
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
-    figure4 <- ggplot(data = dfsemaine, aes(x = nbaccidentparsemaine, y = numsemaine)) +
+    figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
+    geom_line() +
         labs(title = "Répartition des accidents en fonction 
-             des conditions atmosphériques") +
-        theme_void()
+             des conditions atmosphériques", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
+        theme_minimal()
     print("On remarque que la distribution générale des 
     accidents dans le temps ne suit pas un modèle linéaire.
     Cependant, et justement car la variabilité des accidents 
@@ -181,5 +189,3 @@ affiche_serie_semaine <- function(){
     distribution mensuelle des accidents.  ")
     print(figure4)
 }
-affiche_pie_heure()
-print("fin de code")

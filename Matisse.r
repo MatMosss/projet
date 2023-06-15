@@ -20,7 +20,7 @@ data$id_code_insee <- as.character(data$id_code_insee)
 
 infos$insee_code <- as.character(infos$insee_code)
 infos <- subset(infos, !duplicated(insee_code))
-
+ AGE - 14 !!!
 # compteur <- 1
 # for (lat in data$latitude) {
 #   if (lat == 2009 || lat == "0") {
