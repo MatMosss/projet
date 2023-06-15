@@ -1,15 +1,3 @@
-#Mettre les variables numériques sous format numériques, date sous format date, etc
-data <- read.csv("stat_acc_V3.csv", header = TRUE, sep = ";")
-
-data$id_usa <- as.numeric(data$id_usa)
-data$id_code_insee <- as.numeric(data$id_code_insee)
-data$an_nais <- as.numeric(data$an_nais)
-data$age <- as.numeric(data$age)
-data$place <- as.numeric(data$place)
-
-data$date <- as.Date(data$date)
-
-
 
 #Histo 1
 # Charger le fichier CSV
@@ -42,6 +30,8 @@ barplot(nombre_accidents,
 
 #Histo 2
 # Créer une nouvelle colonne pour le mois
+data$date <- as.Date(data$date)
+
 data$mois <- format(data$date, "%Y-%m")
 
 # Calculer la moyenne mensuelle des accidents
@@ -49,8 +39,8 @@ moyenne_mensuelle <- aggregate(Num_Acc ~ mois, data, FUN = length)
 
 # Tracer l'histogramme
 barplot(moyenne_mensuelle$Num_Acc, 
-         names.arg = moyenne_mensuelle$mois, 
-         xlab = "Mois", 
-         ylab = "Nombre d'accidents", 
-         main = "Moyenne mensuelle des accidents")
+        names.arg = moyenne_mensuelle$mois, 
+        xlab = "Mois", 
+        ylab = "Nombre d'accidents", 
+        main = "Moyenne mensuelle des accidents")
 
