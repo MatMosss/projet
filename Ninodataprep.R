@@ -10,6 +10,7 @@ vecteur1 <- data.frame(id = vecteur1)
 
 pop <- read.csv2(file = "donnees_regions.csv", sep = ";")
 
+
 pop$REG <- tolower(pop$REG)
 # insee = sqldf("SELECT * FROM vecteur1 LEFT JOIN vecteur2 ON vecteur1.id = vecteur2.x")
 
