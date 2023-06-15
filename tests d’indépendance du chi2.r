@@ -190,20 +190,45 @@ print(tableau_croise8)
 #-test----------chi2-----------------------
 # Avant de commencer le test du chi-carré, nous faisons l'hypothèse que les deux variables de chaque tableau sont indépendantes
 
+
 test_chi2_1 <- chisq.test(tableau_croise1)
 print(test_chi2_1)
+residues <- residuals(test_chi2_1, "stdres")
+print(residues)
+
+
 test_chi2_2 <- chisq.test(tableau_croise2)
 print(test_chi2_2)
+residues <- residuals(test_chi2_2, "stdres")
+print(residues)
+
 test_chi2_3 <- chisq.test(tableau_croise3)
 print(test_chi2_3)
+residues <- residuals(test_chi2_3, "stdres")
+print(residues)
+
 test_chi2_4 <- chisq.test(tableau_croise4)
 print(test_chi2_4)
+residues <- residuals(test_chi2_4, "stdres")
+print(residues)
+
 test_chi2_5 <- chisq.test(tableau_croise5)
 print(test_chi2_5)
+residues <- residuals(test_chi2_5, "stdres")
+print(residues)
+
 test_chi2_6 <- chisq.test(tableau_croise6)
 print(test_chi2_6)
+residues <- residuals(test_chi2_6, "stdres")
+print(residues)
+
 test_chi2_7 <- chisq.test(tableau_croise7)
 print(test_chi2_7)
+residues <- residuals(test_chi2_7, "stdres")
+print(residues)
+
 test_chi2_8 <- chisq.test(tableau_croise8)
 print(test_chi2_8)
+residues <- residuals(test_chi2_8, "stdres")
+print(residues)
 ## Les résultats des tests du chi-carré montrent que le p-value est inférieur à 0,05 pour tous les tests (p-value < 2.2e-16), cela indique que notre hypothese est  rejetée est  les  variables sont dépendantes
