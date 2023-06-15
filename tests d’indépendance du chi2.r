@@ -1,6 +1,9 @@
 
 
-tests_tableaux_indépendance <- function() {
+tests_tableaux_independance <- function() {
+  library(tidyverse)
+library(vcd)
+library(grid)
 # Charger les données depuis le fichier CSV
 data <- read.csv("stat_acc_V3.csv", sep=";")
 
@@ -258,6 +261,6 @@ print(residues)
 }
 
 main <- function() {
-  tests_tableaux_indépendance()
+  tests_tableaux_independance()
 }
 main()
