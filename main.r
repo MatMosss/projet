@@ -2,6 +2,7 @@ source("Matisse_traitement_donnee.r")
 source("Matisse_sql.r")
 source("RdeJuju.r")
 source("histogrammes.r")
+source("tests d’indépendance du chi2.r")
 
 # library(sqldf)
 # library(dplyr)
