@@ -1,4 +1,3 @@
-source("RdeJuju.r")
 library(ggplot2)
 affiche_pie_athmo()
 affiche_pie_surface()
