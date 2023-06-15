@@ -162,17 +162,23 @@ affiche_serie_mois <- function(CUMUL){
     numois <- as.numeric(numois)
     dfmois = data.frame(nbaccident, numois)
     print(dfmois)
-    figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident, fill = nbaccident)) +
-    geom_line() +
-        labs(title = "série chronologique des accidents en fonction des mois", x = "les mois", y = "Nombre d'accidents" ) +
-        theme() + theme(panel.background = element_rect(fill = "white"))+
-        scale_x_continuous(breaks = numois, labels = dictionnaire_mois)
+    
     print(figure2)
     if(CUMUL== 0){
-    ggsave("figure/figureseriemois.png", figure2, dpi =300)
+        figure7 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident, fill = nbaccident)) +
+        geom_line() +
+        labs(title = "série chronologique des accidents en fonction des mois", x = "les mois", y = "Nombre d'accidents" ) +
+        theme() +
+        scale_x_continuous(breaks = numois, labels = dictionnaire_mois)
+        ggsave("figure/figureseriemois.png", figure7, dpi =300)
     }
     if(CUMUL== 1){
-    ggsave("figure/figureseriemoiscumul.png", figure2, dpi =300)
+        figure2 <- ggplot(data = dfmois, aes(x = numois, y = nbaccident, fill = nbaccident)) +
+        geom_line() +
+        labs(title = "série chronologique des accidents en fonction des mois cumulés", x = "les mois", y = "Nombre d'accidents" ) +
+        theme() +
+        scale_x_continuous(breaks = numois, labels = dictionnaire_mois)
+        ggsave("figure/figureseriemoiscumul.png", figure2, dpi =300)
     }
 
  }
@@ -186,10 +192,7 @@ affiche_serie_semaine <- function(CUMUL){
     nbaccidentparsemaine <- nbaccidentparsemaine[order(numsemaine)]
 
     dfsemaine = data.frame(nbaccidentparsemaine, numsemaine)
-    figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
-    geom_line() +
-        labs(title = "Série chrologique des accidents en fonction des semaines", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
-        theme()
+    
     print("On remarque que la distribution générale des 
     accidents dans le temps ne suit pas un modèle linéaire.
     Cependant, et justement car la variabilité des accidents 
@@ -200,11 +203,18 @@ affiche_serie_semaine <- function(CUMUL){
     on peut estimer qu'un modèle linéaire
     conviendrait mieux à la
     distribution mensuelle des accidents.  ")
-    print(figure4)
     if(CUMUL== 0){
-    ggsave("figure/figureseriesemaine.png", figure4, dpi =300)
+        figure4 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
+        geom_line() +
+        labs(title = "Série chrologique des accidents en fonction des semaines", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
+        theme()
+        ggsave("figure/figureseriesemaine.png", figure4, dpi =300)
     }
     if(CUMUL== 1){
-    ggsave("figure/figureseriesemainecumul.png", figure4, dpi =300)
+        figure8 <- ggplot(data = dfsemaine, aes(x = numsemaine, y = nbaccidentparsemaine)) +
+        geom_line() +
+        labs(title = "Série chrologique des accidents pour des semaines cumulés", x = "Numéro de semaine", y = "Nombre d'accidents" ) +
+        theme()
+        ggsave("figure/figureseriesemainecumul.png", figure8, dpi =300)
     }
 }
