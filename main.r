@@ -24,7 +24,7 @@ library(FactoMineR)
 
 main <- function(){
 
-    #sauvegarde dans dossier csv le fichier stat_data_IA.csv qui nous sera utile pour le projet d'IA
+    #sauvegarde dans dossier csv le fichier stat_data_IA.csv qui nous sera utile pour le projet d'IA(long à exécuter)
     traitement_donnees()
 
     #stock diagramme camembert dans "figure/figureathmo.png"
@@ -33,7 +33,7 @@ main <- function(){
     #stock diagramme camembert dans "figure/figuresurface.png"
     affiche_pie_surface()
 
-    #stock diagramme barre dans "figure/figureville.png"
+    #stock diagramme barre dans "figure/figureville.png"(long à exécuter)
     affiche_barre_ville()
 
     #stocke diagramme camembert dans "figure/figuregrav.png"
