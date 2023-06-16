@@ -38,6 +38,7 @@ regressions <-function(){
     nbaccident <- as.numeric(valeur1$list_nb)
     numois <- as.numeric(valeur1$list_type)
 
+    #Nombre d'accidents correspondants pour les modèles cumulatifs
     nbaccidentcumul <-rep(0,12)
     nbaccidentcumul[1] = nbaccident[1]
 
@@ -46,6 +47,8 @@ regressions <-function(){
         nbaccidentcumul[i] = nbaccident[i]+nbaccidentcumul[i-1]
 
     }
+
+    #Création des modèles de régression linéaire
     model <- lm(nbaccident ~ numois)
     modelcumul<-lm(nbaccidentcumul~numois)
 
@@ -59,12 +62,14 @@ regressions <-function(){
      des mois"))
     abline(lm(nbaccidentcumul ~ numois))
     
+    #Affiche de nombreuses informations statistiques 
     print(summary(model))
     print(anova(model))
 
     print(summary(modelcumul))
     print(anova(modelcumul))
 
+    #Réitère le processus pour les semaines
     valeur2 <- fonction_visu1(BDD2$semaines)
     nbaccident2 <- as.numeric(valeur2$list_nb)
     nusemaines <- as.numeric(valeur2$list_type)

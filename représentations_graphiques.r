@@ -44,8 +44,8 @@ affiche_pie_athmo <- function(){
         theme(plot.title = element_text(face = "bold", hjust=0.5))
     ggsave("figure/figureathmo.png", figure, dpi =300)
 }
-#stock diagramme camembert dans "figure/figuresurface.png"
 
+#stock diagramme camembert dans "figure/figuresurface.png"
 affiche_pie_surface <- function(){
     surface <- fonction_visu(BDD$descr_etat_surf, 0)
     surf1 <- surface$list_nb
@@ -61,8 +61,8 @@ affiche_pie_surface <- function(){
         theme(plot.title = element_text(face = "bold", hjust=0.5))
     ggsave("figure/figuresurface.png", figure1, dpi =300)
     }
-#stock diagramme barre dans "figure/figureville.png"
 
+#stock diagramme barre dans "figure/figureville.png"
 affiche_barre_ville <- function(){
     ville <- fonction_visu(BDD$ville, 0)
     ville1 <- ville$list_nb[ville$list_nb > 500]
@@ -107,8 +107,8 @@ affiche_pie_heure <- function(){
     ggsave("figure/figureheure.png", figure2, dpi =300)
 
 }
-#stocke diagramme camembert dans "figure/figuregrav.png"
 
+#stocke diagramme camembert dans "figure/figuregrav.png"
 affiche_pie_gravite <- function(){
     gravite <- fonction_visu(BDD$descr_grav, 0)
     grav1 <- gravite$list_nb

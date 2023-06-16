@@ -1,7 +1,6 @@
 
-
+#permet de creer les dataframe qui seront utiles pour afficher les cartes de regions/departements
 return_dataframe_for_print_graph <- function(){  
-
   data <- read.csv2(file = "csv/stat_data_IA.csv", sep = ",")
   infos <- read.csv2(file = "csv/cities.csv", sep = ",")
   pop_reg <- read.csv2(file = "csv/donnees_regions.csv", sep = ";")
@@ -79,12 +78,10 @@ return_dataframe_for_print_graph <- function(){
 return(list(nbr_incidents_reg = nbr_incidents_reg, nbr_incidents_dep = nbr_incidents_dep))
 }
 
-
+#permet de sauvegarder dans dossier png les différentes cartes des regions
 download_graph_regions <- function(type_graph){
   nbr_incidents <- return_dataframe_for_print_graph()
   nbr_incidents_reg <- nbr_incidents$nbr_incidents_reg
-
-
   regions <- st_read("data/regions-20180101-shp/")
   regions1 <- ms_simplify(regions) #pour réduire le temp d'affichage de la carte
   format(object.size(regions1),units="Mb")
@@ -135,7 +132,7 @@ download_graph_regions <- function(type_graph){
 
 
 
-
+#permet de sauvegarder dans dossier png les différentes cartes des departement
 download_graph_departement <- function(){
   nbr_incidents <- return_dataframe_for_print_graph()
   nbr_incidents_dep <- nbr_incidents$nbr_incidents_dep

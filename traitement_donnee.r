@@ -1,4 +1,4 @@
-
+#sauvegarde dans dossier csv le fichier stat_data_IA.csv qui nous sera utile pour le projet d'IA
 traitement_donnees <- function(){ 
     data <- read.csv2(file = "csv/stat_MossMoss.csv") #on ouvre le fichier 
     infos <- read.csv2(file = "csv/cities.csv", sep = ",") #onsépare par colonne les nom séparé par des virgules
