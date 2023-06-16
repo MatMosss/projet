@@ -1,6 +1,6 @@
 
 population_100 <-function(){
-
+    #Reprise du code permettant d'obtenir un premier jeu de données pour l'ACP
     library(sqldf)
     library(dplyr)
   
@@ -45,7 +45,7 @@ population_100 <-function(){
 }
 
 population2_100 <-function(){
-
+    #Remanie le premier jeu de données pour l'ACP afin d'obtenir le bon format (individus = régions, variables = gravité)
     population = population_100()
 
     colonne0 = rep(0,17)
@@ -110,7 +110,10 @@ population2_100 <-function(){
 }
 
 ACP <-function(){
-
+#Applique la méthode PCA sur les deux jeux de données, affiche les scores des eigenvalues 
+    # et doit afficher l'éboulis des eigenvalues aisni que les graphes d'individus et de variables
+    # cet affichage fonctionne sur RStudio mais pas sur VSCode pour une raison qui nous est inconnue
+    population1 = population_100()
     population1 = population_100()
     PCA1 = PCA(population1)
     print(PCA1$eig)

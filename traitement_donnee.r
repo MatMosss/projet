@@ -65,6 +65,6 @@ traitement_donnees <- function(){
 
     }
 
-    write.csv(data, "stat_data_IA.csv", row.names = FALSE)
+    write.csv(data, "csv/stat_data_IA.csv", row.names = FALSE)
 
 }

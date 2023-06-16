@@ -1,3 +1,6 @@
+#Cette fonction permet de retourner (pour notre usage) les mois/semaines
+# et leur nombre d'accidents correspondants
+
 fonction_visu1 <- function(colonne){
     list_nb <- vector("numeric", 0)
 
@@ -30,6 +33,7 @@ regressions <-function(){
 
     BDD2 <- read.csv2(file = "csv/temp.csv", sep = ",")
 
+    #Utilisation de fonction_visu() pour avoir les mois et leur nombre d'accidents correspondants
     valeur1 <- fonction_visu1(BDD2$mois)
     nbaccident <- as.numeric(valeur1$list_nb)
     numois <- as.numeric(valeur1$list_type)
