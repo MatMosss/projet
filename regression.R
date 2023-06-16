@@ -1,4 +1,4 @@
-fonction_visu <- function(colonne){
+fonction_visu1 <- function(colonne){
     list_nb <- vector("numeric", 0)
 
     list_type <- vector("character", 0)
@@ -8,7 +8,7 @@ fonction_visu <- function(colonne){
         for (element in colonne){
             if (element == elt) {
                 compteur <- compteur + 1
-        }
+            }
     }
 
     list_nb <- c(list_nb, compteur)
@@ -17,9 +17,9 @@ fonction_visu <- function(colonne){
     return(list(list_nb = list_nb, list_type = list_type))
 }
 
-regressions <-function(data){
+regressions <-function(){
 
-    data =read.csv2('stat_data_IA.csv')
+    data =read.csv2('stat_juju.csv')
 
     data$date<- as.Date(data$date,format="%Y-%m-%d %H:%M:%S")
     data$mois<-format(data$date,"%m")
@@ -30,7 +30,7 @@ regressions <-function(data){
 
     BDD2 <- read.csv2(file = "temp.csv", sep = ",")
 
-    valeur1 <- fonction_visu(BDD2$mois)
+    valeur1 <- fonction_visu1(BDD2$mois)
     nbaccident <- as.numeric(valeur1$list_nb)
     numois <- as.numeric(valeur1$list_type)
 
@@ -47,13 +47,8 @@ regressions <-function(data){
 
     par(mfrow=c(1,4))
 
-<<<<<<< HEAD
-
-    print(plot(numois,nbaccident, col = "blue"))
-=======
     plot(numois,nbaccident, col = "blue",title("Accidents en fonction 
     des mois"))
->>>>>>> d5fbf63c575aecde445883775110ac1c09cb4da1
     abline(lm(nbaccident ~ numois))
 
     plot(numois,nbaccidentcumul, col = "red",title("Accidents cumulés en fonction
@@ -66,7 +61,7 @@ regressions <-function(data){
     print(summary(modelcumul))
     print(anova(modelcumul))
 
-    valeur2 <- fonction_visu(BDD2$semaines)
+    valeur2 <- fonction_visu1(BDD2$semaines)
     nbaccident2 <- as.numeric(valeur2$list_nb)
     nusemaines <- as.numeric(valeur2$list_type)
 

@@ -1,10 +1,12 @@
 library("ggplot2")
 BDD <- read.csv2(file = "stat_juju.csv")
+#Modification dataframe
 BDD[BDD == "NULL"] <- " NA"
 BDD$descr_grav[BDD$descr_grav == "Indemne"] <- 0
 BDD$descr_grav[BDD$descr_grav == "Blessé léger"] <- 1
 BDD$descr_grav[BDD$descr_grav == "Blessé hospitalisé"] <- 2
 BDD$descr_grav[BDD$descr_grav == "Tué"] <- 3
+#fonction qui retourne le nombre d'occurrence pour chaque apparition de valeur
 fonction_visu <- function(colonne, cumule){
     list_nb <- vector("numeric", 0)
     valeur <- 0
@@ -26,6 +28,7 @@ fonction_visu <- function(colonne, cumule){
     }
     return(list(list_nb = list_nb, list_type = list_type))
 }
+#stock diagramme camembert dans "figure/figureathmo.png"
 affiche_pie_athmo <- function(){
     valeur <- fonction_visu(BDD$descr_athmo, 0)
 
@@ -41,6 +44,8 @@ affiche_pie_athmo <- function(){
         theme(plot.title = element_text(face = "bold", hjust=0.5))
     ggsave("figure/figureathmo.png", figure, dpi =300)
 }
+#stock diagramme camembert dans "figure/figuresurface.png"
+
 affiche_pie_surface <- function(){
     surface <- fonction_visu(BDD$descr_etat_surf, 0)
     surf1 <- surface$list_nb
@@ -56,6 +61,8 @@ affiche_pie_surface <- function(){
         theme(plot.title = element_text(face = "bold", hjust=0.5))
     ggsave("figure/figuresurface.png", figure1, dpi =300)
     }
+#stock diagramme barre dans "figure/figureville.png"
+
 affiche_barre_ville <- function(){
     ville <- fonction_visu(BDD$ville, 0)
     ville1 <- ville$list_nb[ville$list_nb > 500]
@@ -71,7 +78,7 @@ affiche_barre_ville <- function(){
     ggsave("figure/figureville.png", figure, dpi =300)
 
     }
-
+#stocke diagramme barre dans "figure/figureheure.png"
 affiche_pie_heure <- function(){
     date <- BDD$date
     listV <- c(0, 0, 0, 0, 0, 0)
@@ -90,9 +97,7 @@ affiche_pie_heure <- function(){
     }
     tranche_heure = c("0-4h", "4-8h", "8-12h", "12-16h", "16-20h", "20-24h")
     dfheure <- data.frame(listV, tranche_heure)
-    print(dfheure)
-    print("bla")
-     dfheure$tranche_heure <- factor(dfheure$tranche_heure, levels = tranche_heure)
+    dfheure$tranche_heure <- factor(dfheure$tranche_heure, levels = tranche_heure)
     figure2 <- ggplot(data = dfheure, aes(x = tranche_heure, y = listV, fill = tranche_heure)) +
         geom_bar(stat = "identity") +
     labs(title = "Nombre d'accidents par tranche horraire",
@@ -102,6 +107,8 @@ affiche_pie_heure <- function(){
     ggsave("figure/figureheure.png", figure2, dpi =300)
 
 }
+#stocke diagramme camembert dans "figure/figuregrav.png"
+
 affiche_pie_gravite <- function(){
     gravite <- fonction_visu(BDD$descr_grav, 0)
     grav1 <- gravite$list_nb
@@ -117,7 +124,7 @@ affiche_pie_gravite <- function(){
         ggsave("figure/figuregrav.png", figure1, dpi =300)
 
 }
-
+#créer un nouveau dataframe pour pouvoir manipuler les dates
 ecriture_csv <- function(){
     listeVide = c()
     for(elt in BDD$date){
@@ -131,7 +138,7 @@ ecriture_csv <- function(){
     write.csv(BDD, "stat_juju3.csv", row.names = FALSE)
 }
 BDD2 <- read.csv2(file = "stat_juju3.csv", sep = ",")
-
+#stocke série chronologique dans fichier/figureseriemoiscumul.png ou fichier/figureseriemois.png
 affiche_serie_mois <- function(CUMUL){
     valeur1 <- fonction_visu(BDD2$mois, CUMUL)
     nbaccident <- valeur1$list_nb
@@ -157,7 +164,7 @@ affiche_serie_mois <- function(CUMUL){
     }
 
  }
- # geom_point() + geom_line() +
+#stocke série chronologique dans fichier/figureseriesemainecumul.png ou fichier/figureseriesemaine.png
 affiche_serie_semaine <- function(CUMUL){
     valeur2 <- fonction_visu(BDD2$semaine, CUMUL)  
     nbaccidentparsemaine <- valeur2$list_nb

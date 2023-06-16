@@ -7,6 +7,7 @@ population_100 <-function(){
     pop <- read.csv2(file = "donnees_regions.csv", sep = ";")
     pop$REG <- tolower(pop$REG)
     infos <- read.csv2(file = "cities.csv", sep = ",")
+    data <- read.csv2(file = "stat_data_IA.csv", sep = ",")
 
 
     df_groupe = sqldf("SELECT id_usa,data.descr_grav,infos.region_name, infos.department_name 

@@ -52,7 +52,7 @@ Histogramme <- function() {
 }
 
 
-main <- function() {
-  Histogramme()
-}
-main()
+# main <- function() {
+#   Histogramme()
+# }
+# main()
