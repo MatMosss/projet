@@ -2,7 +2,7 @@ library("ggplot2")
 Histogramme <- function() {
   #histogramme de la quantité d'accidents par tranche d'âge
   # Charger le fichier CSV
-  data <- read.csv("stat_acc_V3.csv", sep = ";")
+  data <- read.csv("csv/stat_acc_V3.csv", sep = ";")
   
   # Convertir la colonne 'an_nais' en type numérique
   data$an_nais <- as.numeric(data$an_nais)

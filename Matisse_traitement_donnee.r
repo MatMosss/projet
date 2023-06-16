@@ -1,7 +1,7 @@
 
 traitement_donnees <- function(){ 
-    data <- read.csv2(file = "stat_MossMoss.csv") #on ouvre le fichier 
-    infos <- read.csv2(file = "cities.csv", sep = ",") #onsépare par colonne les nom séparé par des virgules
+    data <- read.csv2(file = "csv/stat_MossMoss.csv") #on ouvre le fichier 
+    infos <- read.csv2(file = "csv/cities.csv", sep = ",") #onsépare par colonne les nom séparé par des virgules
     data[data == "NULL"] <- NA
 
     # on met les valeurs des colonnes sous le bon format

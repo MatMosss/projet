@@ -2,10 +2,10 @@
 
 return_dataframe_for_print_graph <- function(){  
 
-  data <- read.csv2(file = "stat_data_IA.csv", sep = ",")
-  infos <- read.csv2(file = "cities.csv", sep = ",")
-  pop_reg <- read.csv2(file = "donnees_regions.csv", sep = ";")
-  pop_dep <- read.csv2(file = "donnees_departements.csv", sep = ";")
+  data <- read.csv2(file = "csv/stat_data_IA.csv", sep = ",")
+  infos <- read.csv2(file = "csv/cities.csv", sep = ",")
+  pop_reg <- read.csv2(file = "csv/donnees_regions.csv", sep = ";")
+  pop_dep <- read.csv2(file = "csv/donnees_departements.csv", sep = ";")
 
   pop_reg$REG <- tolower(pop_reg$REG)
 

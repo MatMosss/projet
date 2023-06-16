@@ -1,5 +1,5 @@
 library("ggplot2")
-BDD <- read.csv2(file = "stat_juju.csv")
+BDD <- read.csv2(file = "csv/stat_juju.csv")
 #Modification dataframe
 BDD[BDD == "NULL"] <- " NA"
 BDD$descr_grav[BDD$descr_grav == "Indemne"] <- 0
@@ -135,9 +135,9 @@ ecriture_csv <- function(){
 
     BDD$date1 <- as.Date(BDD$date, format = "%Y-%m-%d %H:%M:%S")
     BDD$semaine <- format(BDD$date1, "%U")
-    write.csv(BDD, "stat_juju3.csv", row.names = FALSE)
+    write.csv(BDD, "csv/stat_juju3.csv", row.names = FALSE)
 }
-BDD2 <- read.csv2(file = "stat_juju3.csv", sep = ",")
+BDD2 <- read.csv2(file = "csv/stat_juju3.csv", sep = ",")
 #stocke série chronologique dans fichier/figureseriemoiscumul.png ou fichier/figureseriemois.png
 affiche_serie_mois <- function(CUMUL){
     valeur1 <- fonction_visu(BDD2$mois, CUMUL)

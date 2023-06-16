@@ -4,10 +4,10 @@ population_100 <-function(){
     library(sqldf)
     library(dplyr)
   
-    pop <- read.csv2(file = "donnees_regions.csv", sep = ";")
+    pop <- read.csv2(file = "csv/donnees_regions.csv", sep = ";")
     pop$REG <- tolower(pop$REG)
-    infos <- read.csv2(file = "cities.csv", sep = ",")
-    data <- read.csv2(file = "stat_data_IA.csv", sep = ",")
+    infos <- read.csv2(file = "csv/cities.csv", sep = ",")
+    data <- read.csv2(file = "csv/stat_data_IA.csv", sep = ",")
 
 
     df_groupe = sqldf("SELECT id_usa,data.descr_grav,infos.region_name, infos.department_name 
@@ -103,8 +103,6 @@ population2_100 <-function(){
     colnames(population2) <- c(0,1,2,3)
     rownames(population2) <- unique(population$region_name)
 
-    # jeremy = read.csv2(file = "pop100.csv", sep = ",")
-    # write.csv(jeremy, "pop100.csv",row.names = FALSE)
 
 
     return(population2)

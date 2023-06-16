@@ -5,7 +5,7 @@ tests_tableaux_independance <- function() {
 library(vcd)
 library(grid)
 # Charger les données depuis le fichier CSV
-data <- read.csv("stat_acc_V3.csv", sep=";")
+data <- read.csv("csv/stat_acc_V3.csv", sep=";")
 
 #-1-----------------------------------------------------------------------------
 

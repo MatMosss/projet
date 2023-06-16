@@ -19,16 +19,16 @@ fonction_visu1 <- function(colonne){
 
 regressions <-function(){
 
-    data =read.csv2('stat_juju.csv')
+    data =read.csv2('csv/stat_juju.csv')
 
     data$date<- as.Date(data$date,format="%Y-%m-%d %H:%M:%S")
     data$mois<-format(data$date,"%m")
     data$semaines <-format(data$date,"%U")
 
-    write.csv(data, "temp.csv", row.names = FALSE)
+    write.csv(data, "csv/temp.csv", row.names = FALSE)
 
 
-    BDD2 <- read.csv2(file = "temp.csv", sep = ",")
+    BDD2 <- read.csv2(file = "csv/temp.csv", sep = ",")
 
     valeur1 <- fonction_visu1(BDD2$mois)
     nbaccident <- as.numeric(valeur1$list_nb)
